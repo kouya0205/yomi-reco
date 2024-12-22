@@ -7,13 +7,12 @@ import { FC, useActionState } from 'react';
 import { authConfig } from '@/config/auth';
 import { signupSchema } from '@/config/schema';
 import { signup } from '@/hooks/useActions';
-
-import { Separate } from '../separate';
-import { Button } from '../ui/button';
-import { CardContent, CardFooter } from '../ui/card';
-import { Checkbox } from '../ui/checkbox';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+import { CardContent, CardFooter } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
+import { Separate } from '@/components/separate';
 
 export const SignupForm: FC = () => {
   const [lastResult, action] = useActionState(signup, undefined);

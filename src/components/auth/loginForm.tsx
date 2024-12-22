@@ -8,11 +8,11 @@ import { authConfig } from '@/config/auth';
 import { loginSchema } from '@/config/schema';
 import { emailLogin } from '@/hooks/useActions';
 
-import { Separate } from '../separate';
-import { Button } from '../ui/button';
-import { CardContent, CardFooter } from '../ui/card';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { CardContent, CardFooter } from '@/components/ui/card';
+import { Separate } from '@/components/separate';
+import { Button } from '@/components/ui/button';
 
 export const LoginForm: FC = () => {
   const [lastResult, action] = useActionState(emailLogin, undefined);
