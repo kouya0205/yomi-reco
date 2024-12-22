@@ -3,7 +3,11 @@ import Image from 'next/image';
 import { createClient } from '@/utils/supabase/server';
 import { RecommendRow } from 'types';
 
-export default async function RecommendDetailPage({ params }: { params: { bookId: string } }) {
+export default async function RecommendDetailPage({
+  params,
+}: {
+  params: Promise<{ bookId: string }>;
+}) {
   const supabase = await createClient();
   const bookId = (await params).bookId;
 
