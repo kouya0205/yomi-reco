@@ -1,8 +1,18 @@
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
+import { signOut } from '@/hooks/useActions';
+import { createClient } from '@/utils/supabase/server';
 import Image from 'next/image';
+import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  console.log(user);
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
@@ -64,14 +74,15 @@ export default function Home() {
           <Image aria-hidden src="/window.svg" alt="Window icon" width={16} height={16} />
           Examples
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer">
-          <Image aria-hidden src="/globe.svg" alt="Globe icon" width={16} height={16} />
-          Go to nextjs.org →
-        </a>
+        {user ? (
+          <form action={signOut} method="POST">
+            <Button type="submit" className="bg-red-500 text-white">
+              Sign out
+            </Button>
+          </form>
+        ) : (
+          <Link href="/auth">Sign in</Link>
+        )}
       </footer>
     </div>
   );
