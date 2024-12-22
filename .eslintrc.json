@@ -24,7 +24,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "object-shorthand": "error",
+    "object-shorthand": "warn",
     "tailwindcss/no-custom-classname": "off",
     "react/jsx-curly-brace-presence": "error",
     "react/self-closing-comp": [
