@@ -10,7 +10,7 @@ export default async function Home() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log(user);
+
   return (
     <div className="">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -75,11 +75,14 @@ export default async function Home() {
           Examples
         </a>
         {user ? (
-          <form action={signOut} method="POST">
-            <Button type="submit" className="bg-red-500 text-white">
-              Sign out
-            </Button>
-          </form>
+          <>
+            <form action={signOut}>
+              <Button type="submit" className="bg-red-500 text-white">
+                Sign out
+              </Button>
+            </form>
+            <p>Sign in as {user.email}</p>
+          </>
         ) : (
           <Link href="/auth">Sign in</Link>
         )}
