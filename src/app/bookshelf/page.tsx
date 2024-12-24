@@ -102,27 +102,32 @@ const BookshelfPage = () => {
         {books.length === 0 ? (
           <p className="text-gray-500">本がありません。追加してください。</p>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {books.map((book) => (
-              <Card key={book.id} className="m-4 border-none bg-none">
-                <CardContent className="flex flex-row bg-orange-100">
-                  {book.coverImage && (
-                    <div className="bg-orange-100 rounded-3xl">
+              <Card key={book.id} className="shadow-md rounded-xl pt-6 bg-orange-100">
+                <CardContent className="flex flex-row gap-4">
+                  <div className="">
+                    {book.coverImage && (
                       <Image
                         src={book.coverImage}
                         alt={`${book.title}`}
-                        width={64 * 2.0}
-                        height={96 * 2.0}
-                        className=" object-cover rounded-2xl m-2"
+                        width={64 * 1.8}
+                        height={96 * 1.8}
+                        className="object-cover rounded-2xl"
                       />
-                    </div>
-                  )}
-                  <div className="flex flex-col m-4">
+                    )}
+                  </div>
+                  <div className="flex flex-col m-4 gap-2">
                     <div className="font-bold text-xl">{book.title}</div>
                     <div className="font-thin text-sm overflow-hidden text-gray-400">
                       {book.author}
                     </div>
-                    <div className="flex flex-row">{book.status}</div>
+                    <div className="flex flex-row gap-4">
+                      <div className="w-12 h-12 bg-red-300"></div>
+                      <div className="w-12 h-12 bg-blue-300"></div>
+                      <div className="w-12 h-12 bg-green-300"></div>
+                    </div>
+                    {/* <div className="flex flex-row">{book.status}</div> */}
                   </div>
                 </CardContent>
               </Card>
