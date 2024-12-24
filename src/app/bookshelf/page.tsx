@@ -149,7 +149,7 @@ type BookModalProps = {
 const BookModal: React.FC<BookModalProps> = ({ book, onClose, onSave }) => {
   const [title, setTitle] = useState(book ? book.title : '');
   const [author, setAuthor] = useState(book ? book.author : '');
-  const [status, setStatus] = useState<Book['status']>(book ? book.status : '読んでいる');
+  const [status, setStatus] = useState<BookStatus>(book?.status ?? BookStatus.Reading);
 
   const handleSubmit = () => {
     if (title.trim() === '' || author.trim() === '') {
@@ -162,6 +162,9 @@ const BookModal: React.FC<BookModalProps> = ({ book, onClose, onSave }) => {
       title,
       author,
       status,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      isbn: '',
     };
 
     onSave(newBook);
@@ -185,7 +188,9 @@ const BookModal: React.FC<BookModalProps> = ({ book, onClose, onSave }) => {
         </div>
         <div className="mb-4">
           <label className="block mb-1">ステータス</label>
-          <Select value={status} onValueChange={(value) => setStatus(value as Book['status'])}>
+          <Select
+            value={status}
+            onValueChange={(value) => setStatus(value as unknown as Book['status'])}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder={status} />
             </SelectTrigger>
