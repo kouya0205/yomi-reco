@@ -41,7 +41,7 @@ export const SignupForm: FC = () => {
               id="email"
               type="email"
               placeholder={authConfig.signup.email.placeholder}
-              className="focus:border-[#349BD1] focus:ring-[#349BD1]"
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
               key={fields.email.key}
               name={fields.email.name}
               defaultValue={fields.email.initialValue}
@@ -54,7 +54,7 @@ export const SignupForm: FC = () => {
               id="username"
               type="text"
               placeholder={authConfig.signup.username.placeholder}
-              className="focus:border-[#349BD1] focus:ring-[#349BD1]"
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
               key={fields.username.key}
               name={fields.username.name}
               defaultValue={fields.username.initialValue}
@@ -67,7 +67,7 @@ export const SignupForm: FC = () => {
               id="password"
               type="password"
               placeholder={authConfig.signup.password.placeholder}
-              className="focus:border-[#349BD1] focus:ring-[#349BD1]"
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
               key={fields.password.key}
               name={fields.password.name}
               defaultValue={fields.password.initialValue}
@@ -80,7 +80,7 @@ export const SignupForm: FC = () => {
               id="confirmPassword"
               type="password"
               placeholder={authConfig.signup.confirmPassword.placeholder}
-              className="focus:border-[#349BD1] focus:ring-[#349BD1]"
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
               key={fields.confirmPassword.key}
               name={fields.confirmPassword.name}
               defaultValue={fields.confirmPassword.initialValue}
@@ -100,7 +100,7 @@ export const SignupForm: FC = () => {
               <Link
                 href="https://dot-scallop-d45.notion.site/5103947e446548ca8a9d7191fa512be7"
                 target="_blank"
-                className="text-[#349BD1] hover:underline">
+                className="text-[#bd7328] hover:underline">
                 利用規約
               </Link>
               に同意します。
@@ -109,8 +109,8 @@ export const SignupForm: FC = () => {
           <div className="text-xs text-red-600">{fields.acceptCheckbox.errors}</div>
         </CardContent>
         <CardFooter className="flex flex-col py-0">
-          <Button className="w-full bg-[#349BD1] text-white hover:bg-[#38B8EA]">
-            {authConfig.signup.button} <CircleChevronRight className="ml-2 h-4 w-4" />
+          <Button className="w-full bg-[#ffb061] text-white font-bold hover:bg-[#ffc890]">
+            {authConfig.signup.button} <CircleChevronRight className="ml-1 h-4 w-4" />
           </Button>
           <Separate />
         </CardFooter>

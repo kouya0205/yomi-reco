@@ -9,8 +9,8 @@ import { authConfig } from '@/config/auth';
 export const AuthForm = () => {
   return (
     <>
-      <Tabs defaultValue="login" className="w-[400px]">
-        <TabsList className="grid w-full grid-cols-2 bg-blue-200">
+      <Tabs defaultValue="login" className="max-w-[400px]">
+        <TabsList className="grid w-full grid-cols-2 bg-[#ffeedd]">
           <TabsTrigger value="login" className="font-semibold">
             {authConfig.tab.login}
           </TabsTrigger>

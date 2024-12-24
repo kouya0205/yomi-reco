@@ -45,7 +45,7 @@ export const LoginForm: FC = () => {
               id="email"
               type="email"
               placeholder={authConfig.login.email.placeholder}
-              className="focus:border-[#349BD1] focus:ring-[#349BD1]"
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
             />
             <div className="text-xs text-red-600">{fields.email.errors}</div>
           </div>
@@ -55,7 +55,7 @@ export const LoginForm: FC = () => {
               id="password"
               type="password"
               placeholder={authConfig.login.password.placeholder}
-              className="focus:border-[#349BD1] focus:ring-[#349BD1]"
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
               key={fields.password.key}
               name={fields.password.name}
               defaultValue={fields.password.initialValue}
@@ -63,14 +63,14 @@ export const LoginForm: FC = () => {
             <div className="text-xs text-red-600">{fields.password.errors}</div>
           </div>
           <div className="space-y-1">
-            <Link href="/auth/forgot-password" className="text-xs text-[#349BD1] hover:underline">
+            <Link href="/auth/forgot-password" className="text-xs text-[#bd7328] hover:underline">
               パスワードを忘れた方はこちら
             </Link>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col py-0">
-          <Button className="w-full bg-[#349BD1] text-white hover:bg-[#38B8EA]">
-            {authConfig.login.button} <CircleChevronRight className="ml-2 h-4 w-4" />
+          <Button className="w-full bg-[#ffb061] text-white font-bold hover:bg-[#ffc890]">
+            {authConfig.login.button} <CircleChevronRight className="ml-1 h-4 w-4" />
           </Button>
           <Separate />
         </CardFooter>
