@@ -24,11 +24,11 @@ export default function FooterNav() {
 
   // 必要に応じて好きな順番・アイコン・パスに変更してください。
   const navItems: NavItem[] = [
-    { href: '/mybooks', icon: <LibraryBig /> }, // ブックマーク/本棚
-    { href: '/search', icon: <Search /> }, // 検索
-    { href: '/scan', icon: <SquarePlus /> }, // スキャン (バーコード読み取りなど)
-    { href: '/recommend', icon: <BookHeart /> }, // おすすめ
-    { href: '/settings', icon: <CircleUserRound /> }, // 設定
+    { href: '/mybooks', icon: <LibraryBig /> },
+    { href: '/search', icon: <Search /> },
+    { href: '/scan', icon: <SquarePlus /> },
+    { href: '/recommend', icon: <BookHeart /> },
+    { href: '/settings', icon: <CircleUserRound /> },
   ];
 
   // アクティブ判定用
