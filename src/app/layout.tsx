@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <div className="flex min-h-screen">
           {/* サイドナビ (大画面のみ表示) */}
-          <div className="hidden lg:block w-[240px] bg-gray-50 border-r border-gray-200">
+          <div className="hidden lg:block w-[240px] bg-[#ffeedd]">
             <PcSideNav />
           </div>
 
