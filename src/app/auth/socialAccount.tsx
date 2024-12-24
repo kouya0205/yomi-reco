@@ -19,7 +19,7 @@ export function SocialAccount({ tab }: { tab: 'login' | 'signup' }) {
       name: 'google',
       displayName: 'Google',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 48 48">
           <path
             fill="#FFC107"
             d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"
@@ -44,7 +44,7 @@ export function SocialAccount({ tab }: { tab: 'login' | 'signup' }) {
       name: 'twitter',
       displayName: 'X',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 1024 1024">
           <path
             fill="currentColor"
             fillRule="evenodd"
@@ -54,17 +54,33 @@ export function SocialAccount({ tab }: { tab: 'login' | 'signup' }) {
       ),
       className: 'text-white shadow-lg hover:bg-gray-700',
     },
+    {
+      name: 'facebook',
+      displayName: 'Facebook',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          className="bi bi-facebook"
+          viewBox="0 0 16 16">
+          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+        </svg>
+      ),
+      className: 'text-white bg-[#1877f2] shadow-lg hover:bg-[#0e559b] rounded-lg',
+    },
   ];
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-3">
       {SocialProviders.map((provider) => (
         <Button
           key={provider.name}
           onClick={async () => {
             await socialSignIn(provider.name);
           }}
-          className={`flex items-center justify-start space-x-2 pl-7 ${provider.className}`}>
+          className={`flex items-center justify-start space-x-2 pl-7 font-[600] ${provider.className}`}>
           {provider.icon}
           <span>
             {provider.displayName}で{tab === 'login' ? 'ログイン' : '会員登録'}
