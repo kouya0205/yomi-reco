@@ -149,7 +149,7 @@ type BookModalProps = {
 const BookModal: React.FC<BookModalProps> = ({ book, onClose, onSave }) => {
   const [title, setTitle] = useState(book ? book.title : '');
   const [author, setAuthor] = useState(book ? book.author : '');
-  const [status, setStatus] = useState<Book['status']>(book ? book.status : '読んでいる');
+  const [status, setStatus] = useState<BookStatus>(book?.status ?? BookStatus.Reading);
 
   const handleSubmit = () => {
     if (title.trim() === '' || author.trim() === '') {
@@ -162,6 +162,7 @@ const BookModal: React.FC<BookModalProps> = ({ book, onClose, onSave }) => {
       title,
       author,
       status,
+      isbn: '',
     };
 
     onSave(newBook);
