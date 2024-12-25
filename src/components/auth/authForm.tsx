@@ -1,5 +1,5 @@
 'use client';
-import { SocialAccount } from '@/app/auth/socialAccount';
+import { SocialAccount } from '@/components/auth/socialAccount';
 import { LoginForm } from '@/components/auth/loginForm';
 import { SignupForm } from '@/components/auth/signupForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
