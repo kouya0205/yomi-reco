@@ -20,12 +20,16 @@ export default function Search() {
     setBooks([]);
 
     try {
-      const response = await fetch(`/api/serchBooks?q=${encodeURIComponent(query)}`);
+      const response = await fetch(`/api/searchBooks?q=${encodeURIComponent(query)}`);
+
+      const responseBody = await response.text(); // レスポンスボディを一時保存
+      // console.log('Response Status:', response.status);
+      console.log('Response Text:', responseBody);
       if (!response.ok) {
-        const { error } = await response.json();
+        const { error } = JSON.parse(responseBody);
         throw new Error(error || 'Fetch Error');
       }
-      const data = await response.json();
+      const data = JSON.parse(responseBody);
 
       // Google Books APIのレスポンスから books 配列を取り出す
       // setBooks(data.items || []);
