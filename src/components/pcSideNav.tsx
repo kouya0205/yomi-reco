@@ -47,7 +47,7 @@ export default function PcSideNav() {
     <aside className="hidden lg:flex flex-col justify-between  h-screen w-[240px] bg-[#FFF3EC] border-r border-[#f3e4da] pt-8 pb-6">
       <div className="w-full">
         <div className="flex flex-col items-center mb-8">
-          <Image src="/yondako-logo.svg" alt="yondako logo" width={120} height={40} />
+          {/* <Image src="/yondako-logo.svg" alt="yondako logo" width={120} height={40} /> */}
         </div>
 
         {/* ナビゲーションメニュー */}

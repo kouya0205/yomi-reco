@@ -19,6 +19,7 @@ import { Book, BookStatus } from 'types/types';
 import { sampleBooks } from '@/lib/data/sampleBooks';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
+import { BookCard } from '@/components/bookCard';
 
 const statusOptions: BookStatus[] = [BookStatus.WantToRead, BookStatus.Reading, BookStatus.Read];
 
@@ -103,7 +104,7 @@ const BookshelfPage = () => {
           <p className="text-gray-500">本がありません。追加してください。</p>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {books.map((book) => (
+            {/* {books.map((book) => (
               <Card key={book.id} className="shadow-md rounded-xl pt-6 bg-orange-100">
                 <CardContent className="flex flex-row gap-4">
                   <div className="">
@@ -127,10 +128,19 @@ const BookshelfPage = () => {
                       <div className="w-12 h-12 bg-blue-300"></div>
                       <div className="w-12 h-12 bg-green-300"></div>
                     </div>
-                    {/* <div className="flex flex-row">{book.status}</div> */}
                   </div>
                 </CardContent>
               </Card>
+            ))} */}
+            {books.map((book) => (
+              <BookCard
+                key={book.id}
+                book={book}
+                onEdit={openEditModal}
+                onDelete={handleDelete}
+                onStatusChange={handleStatusChange}
+                statusOptions={statusOptions}
+              />
             ))}
           </div>
         )}
