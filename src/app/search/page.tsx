@@ -1,8 +1,11 @@
 'use client';
+import { BookCard } from '@/components/bookCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { Book } from 'types/types';
+import { Book, BookStatus } from 'types/types';
+
+const statusOptions: BookStatus[] = [BookStatus.WantToRead, BookStatus.Reading, BookStatus.Read];
 
 export default function Search() {
   const [query, setQuery] = useState('');
@@ -25,12 +28,34 @@ export default function Search() {
       const data = await response.json();
 
       // Google Books APIのレスポンスから books 配列を取り出す
-      setBooks(data.items || []);
+      // setBooks(data.items || []);
+
+      setBooks(
+        data.items.map((item: any) => ({
+          id: item.id,
+          title: item.volumeInfo.title,
+          author: item.volumeInfo.authors?.join(', ') || '著者不明',
+          coverImage: item.volumeInfo.imageLinks?.thumbnail || '',
+          status: BookStatus.WantToRead, // デフォルトのステータス
+        })),
+      );
     } catch (err: any) {
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleEdit = (book: Book) => {
+    console.log('Edit Book:', book);
+  };
+
+  const handleDelete = (id: string) => {
+    console.log('Delete book with ID:', id);
+  };
+
+  const handleStatusChange = (id: string, status: BookStatus) => {
+    setBooks(books.map((book) => (book.id === id ? { ...book, status } : book)));
   };
 
   return (
@@ -53,14 +78,19 @@ export default function Search() {
       {isLoading && <p>検索中...</p>}
       {error && <p className="bg-red-500">エラーが発生しました: {error}</p>}
 
-      {/* <div className="m-2">
-        {books.length > 0 && books.map(book) => {
-          const { booksInfo } = book;
-          return (
-
-          )
-        }}
-      </div> */}
+      <div className="m-2">
+        {books.length > 0 &&
+          books.map((book) => (
+            <BookCard
+              key={book.id}
+              book={book}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onStatusChange={handleStatusChange}
+              statusOptions={statusOptions}
+            />
+          ))}
+      </div>
     </div>
   );
 }
