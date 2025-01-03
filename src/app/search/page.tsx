@@ -82,7 +82,7 @@ export default function Search() {
       {isLoading && <p>検索中...</p>}
       {error && <p className="bg-red-500">エラーが発生しました: {error}</p>}
 
-      <div className="m-2">
+      <div className="m-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
         {books.length > 0 &&
           books.map((book) => (
             <BookCard
