@@ -1,7 +1,9 @@
 'use client';
 import { BookCard } from '@/components/bookCard';
 import { Button } from '@/components/ui/button';
+import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Book, BookStatus } from 'types/types';
 
@@ -12,6 +14,8 @@ export default function Search() {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleSerch = async () => {
     if (!query) return;
@@ -50,6 +54,11 @@ export default function Search() {
     }
   };
 
+  const handleBookClick = (book: Book) => {
+    setSelectedBook(book);
+    setIsDrawerOpen(true);
+  };
+
   const handleEdit = (book: Book) => {
     console.log('Edit Book:', book);
   };
@@ -85,16 +94,36 @@ export default function Search() {
       <div className="m-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
         {books.length > 0 &&
           books.map((book) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onStatusChange={handleStatusChange}
-              statusOptions={statusOptions}
-            />
+            <div className="cursor-pointer" onClick={() => handleBookClick(book)}>
+              <BookCard
+                key={book.id}
+                book={book}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onStatusChange={handleStatusChange}
+                statusOptions={statusOptions}
+              />
+            </div>
           ))}
       </div>
+
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+        <DrawerContent>
+          {selectedBook && (
+            <div className="p-4">
+              <h2 className="text-lg font-bold">{selectedBook.title}</h2>
+              <p className="text-sm text-gray-600">{selectedBook.author}</p>
+              <Image
+                src={selectedBook.coverImage}
+                alt={`${selectedBook.title}`}
+                width={64 * 1.8}
+                height={96 * 1.8}
+                className="object-cover rounded-2xl"
+              />
+            </div>
+          )}
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }
