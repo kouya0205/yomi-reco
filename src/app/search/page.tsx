@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { Book, BookStatus } from 'types/types';
 
@@ -110,16 +111,40 @@ export default function Search() {
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         <DrawerContent>
           {selectedBook && (
-            <div className="p-4">
-              <h2 className="text-lg font-bold">{selectedBook.title}</h2>
-              <p className="text-sm text-gray-600">{selectedBook.author}</p>
+            <div className="p-4 text-center">
               <Image
                 src={selectedBook.coverImage}
                 alt={`${selectedBook.title}`}
                 width={64 * 1.8}
                 height={96 * 1.8}
-                className="object-cover rounded-2xl"
+                className="mx-auto w-40 h-60 rounded-md m-4"
               />
+              <h2 className="text-lg font-bold">{selectedBook.title}</h2>
+              <p className="text-sm text-gray-600">{selectedBook.author}</p>
+              <p className="text-sm text-gray-600">{selectedBook.publisher}</p>
+
+              <div className="mt-4 flex justify-center gap-4">
+                {statusOptions.map((status) => (
+                  <Button
+                    key={status}
+                    variant={selectedBook.status === status ? 'default' : 'outline'}
+                    onClick={() => console.log(`Status changed to: ${status}`)}>
+                    {status === BookStatus.WantToRead && '読みたい'}
+                    {status === BookStatus.Reading && '読んでる'}
+                    {status === BookStatus.Read && '読んだ'}
+                  </Button>
+                ))}
+              </div>
+
+              <div className="m-6">
+                <h3 className="text-lg font-bold">通販で購入する</h3>
+                <div className="justify-center gap-4 m-4 grid grid-cols-2">
+                  <div className="bg-gray-200 rounded-md">Amazon</div>
+                  <div className="bg-gray-200 rounded-md">Rakuten</div>
+                  <div className="bg-gray-200 rounded-md">ヨドバシ</div>
+                  <div className="bg-gray-200 rounded-md">honto</div>
+                </div>
+              </div>
             </div>
           )}
         </DrawerContent>
