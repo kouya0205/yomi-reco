@@ -56,7 +56,6 @@ export default function UserBookCard({ book, onClick }: Props) {
               <SquareCheck className="w-6 h-6" fill={status === 'done' ? 'currentColor' : 'none'} />
             </div>
           </div>
-          <p>ステータス: {status}</p>
         </div>
       </CardContent>
     </Card>
