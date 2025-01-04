@@ -38,7 +38,7 @@ export default function PcSideNav() {
     { href: '/bookshelf', icon: <LibraryBig />, label: 'My本棚' },
     { href: '/search', icon: <Search />, label: '検索' },
     { href: '/scan', icon: <SquarePlus />, label: '本の登録' },
-    { href: '/recommend', icon: <BookHeart />, label: 'おすすめ' },
+    { href: '/timeline', icon: <BookHeart />, label: 'タイムライン' },
     { href: '/notifications', icon: <Bell />, label: 'お知らせ' },
     { href: '/settings', icon: <Settings />, label: '設定' },
   ];
