@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { BookData } from '@/components/bookShelfClient';
+import { Bookmark, BookOpen, SquareCheck } from 'lucide-react';
 
 type Props = {
   book: BookData;
@@ -13,19 +14,45 @@ export default function UserBookCard({ book, onClick }: Props) {
   const { books, status } = book;
 
   return (
-    <Card onClick={onClick} className="cursor-pointer hover:opacity-80">
-      <CardHeader>
-        <Image
-          src={books.cover_image ?? '/noimage.jpg'}
-          alt={books.title}
-          width={120}
-          height={180}
-        />
-        <CardTitle>{books.title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p>{books.author}</p>
-        <p>ステータス: {status}</p>
+    <Card
+      onClick={onClick}
+      className="cursor-pointer hover:opacity-80 shadow-md rounded-xl pt-6 bg-orange-100">
+      <CardContent className="flex flex-row gap-4">
+        <div className="w-32 h-44 flex-shrink-0">
+          {books.cover_image ? (
+            <Image
+              src={books.cover_image}
+              alt={`${books.title}`}
+              width={64 * 1.8}
+              height={96 * 1.8}
+              className="object-cover rounded-2xl"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-300 rounded-2xl flex items-center justify-center">
+              <span className="text-gray-500">No Image</span>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col m-4 gap-2 flex-1 min-w-0">
+          <div className="font-bold text-md h-12 line-clamp-2">{books.title}</div>
+          <div className="font-thin text-sm overflow-hidden text-gray-400">{books.author}</div>
+          <div className="flex flex-row gap-4">
+            <div className="cursor-pointer">
+              <Bookmark />
+            </div>
+
+            {/* 読んでる */}
+            <div className="cursor-pointer">
+              <BookOpen />
+            </div>
+
+            {/* 読んだ */}
+            <div className="cursor-pointer">
+              <SquareCheck />
+            </div>
+          </div>
+          <p>ステータス: {status}</p>
+        </div>
       </CardContent>
     </Card>
   );
