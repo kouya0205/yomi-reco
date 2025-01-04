@@ -18,8 +18,6 @@ export default function FooterNav() {
     { href: '/bookshelf', icon: <LibraryBig /> },
     { href: '/search', icon: <Search /> },
     { href: '/timeline', icon: <SquarePlus /> },
-    // { href: '/recommend', icon: <BookHeart /> },
-    { href: '/notifications', icon: <Bell /> },
     { href: '/settings', icon: <Settings /> },
   ];
 
