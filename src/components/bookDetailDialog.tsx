@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { BookData } from '@/components/bookShelfClient';
+import Link from 'next/link';
 
 type Props = {
   open: boolean;
@@ -67,24 +68,24 @@ export default function BookDetailDialog({ open, onOpenChange, book, onStatusCha
           {/* 通販リンクなど */}
           <div className="flex flex-col space-y-2 mt-4">
             <Button variant="outline" asChild>
-              <a href="https://www.amazon.co.jp" target="_blank">
+              <Link href="https://www.amazon.co.jp" target="_blank">
                 Amazon
-              </a>
+              </Link>
             </Button>
             <Button variant="outline" asChild>
-              <a href="https://www.rakuten.co.jp" target="_blank">
+              <Link href="https://www.rakuten.co.jp" target="_blank">
                 Rakuten
-              </a>
+              </Link>
             </Button>
             <Button variant="outline" asChild>
-              <a href="https://www.yodobashi.com" target="_blank">
+              <Link href="https://www.yodobashi.com" target="_blank">
                 ヨドバシ.com
-              </a>
+              </Link>
             </Button>
             <Button variant="outline" asChild>
-              <a href="https://honto.jp" target="_blank">
+              <Link href="https://honto.jp" target="_blank">
                 honto
-              </a>
+              </Link>
             </Button>
           </div>
         </div>

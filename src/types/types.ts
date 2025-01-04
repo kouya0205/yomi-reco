@@ -2,9 +2,9 @@
 
 // ステータスの列挙型
 export enum BookStatus {
-  WantToRead = 0,
-  Reading = 1,
-  Read = 2,
+  WantToRead = 'want',
+  Reading = 'reading',
+  Read = 'done',
 }
 
 // アフィリエイトリンクのインタフェース
