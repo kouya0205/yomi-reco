@@ -95,7 +95,7 @@ export default function Search() {
       <div className="m-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
         {books.length > 0 &&
           books.map((book) => (
-            <div className="cursor-pointer" onClick={() => handleBookClick(book)}>
+            <div className="cursor-pointer" onClick={() => handleBookClick(book)} key={book.id}>
               <BookCard
                 key={book.id}
                 book={book}
