@@ -20,6 +20,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.2",
     "@supabase/ssr": "^0.5.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "@typescript-eslint/parser": "^8.18.1",
     "class-variance-authority": "^0.7.1",
