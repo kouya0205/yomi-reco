@@ -27,6 +27,9 @@ export async function PATCH(request: Request) {
     const body = await request.json();
 
     const { user_id, book_id, newStatus } = body; // フロント側から送信される想定
+    console.log('user_id:', user_id);
+    console.log('book_id:', book_id);
+    console.log('newStatus:', newStatus);
 
     const { error } = await supabase
       .from('user_book')
