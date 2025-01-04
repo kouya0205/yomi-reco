@@ -14,17 +14,18 @@ export default async function Header() {
       <div className="relative flex items-center justify-center p-3 lg:hidden">
         <Image src="/logo.svg" alt="logo" width={200} height={30} />
         {user ? (
-          <Link href="/favorites" className="absolute right-4 top-1/2 -translate-y-1/2">
-            <span
-              className={`
-              flex h-10 w-10 items-center justify-center
-              rounded-full
-              transition-colors
-            `}>
-              <Bell />
-            </span>
-          </Link>
+          <div></div>
         ) : (
+          // <Link href="/favorites" className="absolute right-4 top-1/2 -translate-y-1/2">
+          //   <span
+          //     className={`
+          //     flex h-10 w-10 items-center justify-center
+          //     rounded-full
+          //     transition-colors
+          //   `}>
+          //     <Bell />
+          //   </span>
+          // </Link>
           <Link href="/login" className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
             <LogIn />
             <p>log in</p>
