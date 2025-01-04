@@ -4,14 +4,49 @@ import Image from 'next/image';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { BookData } from '@/components/bookShelfClient';
 import { Bookmark, BookOpen, SquareCheck } from 'lucide-react';
+import { BookStatus } from 'types/types';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { User } from 'types';
 
 type Props = {
   book: BookData;
   onClick: () => void; // クリックでモーダル/ダイアログを開くコールバック
+  user: User;
 };
 
-export default function UserBookCard({ book, onClick }: Props) {
+export default function UserBookCard({ book, onClick, user }: Props) {
+  console.log('book:', book);
   const { books, status } = book;
+  const [error, setError] = useState('');
+  const router = useRouter();
+  const updateStatus = async (book: BookData, status: BookStatus) => {
+    if (!user?.id) {
+      setError('ユーザ情報がありません');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/bookshelf/updateStatus`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: user.id,
+          book_id: book.book_id,
+          status,
+        }),
+      });
+      const responseBody = await response.text();
+      if (!response.ok) {
+        const { error } = JSON.parse(responseBody);
+        throw new Error(error || 'Fetch Error');
+      }
+      // 成功したらリフレッシュ
+      router.refresh();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
   return (
     <Card
@@ -40,19 +75,31 @@ export default function UserBookCard({ book, onClick }: Props) {
             {/* <div className="cursor-pointer "> */}
             {/* 読みたいアイコン */}
             <div
-              className={`cursor-pointer ${status === 'want' ? 'text-orange-400' : 'text-gray-400'}`}>
+              className={`cursor-pointer ${status === 'want' ? 'text-orange-400' : 'text-gray-400'}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                updateStatus(book, BookStatus.WantToRead);
+              }}>
               <Bookmark className="w-6 h-6" fill={status === 'want' ? 'currentColor' : 'none'} />
             </div>
 
             {/* 読んでる */}
             <div
-              className={`cursor-pointer ${status === 'reading' ? 'text-orange-400' : 'text-gray-400'}`}>
+              className={`cursor-pointer ${status === 'reading' ? 'text-orange-400' : 'text-gray-400'}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                updateStatus(book, BookStatus.Reading);
+              }}>
               <BookOpen className="w-6 h-6" fill={status === 'reading' ? 'currentColor' : 'none'} />
             </div>
 
             {/* 読んだ */}
             <div
-              className={`cursor-pointer ${status === 'done' ? 'text-orange-400' : 'text-gray-400'}`}>
+              className={`cursor-pointer ${status === 'done' ? 'text-orange-400' : 'text-gray-400'}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                updateStatus(book, BookStatus.Read);
+              }}>
               <SquareCheck className="w-6 h-6" fill={status === 'done' ? 'currentColor' : 'none'} />
             </div>
           </div>
