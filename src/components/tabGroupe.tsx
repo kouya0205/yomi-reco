@@ -11,7 +11,7 @@ type Props = {
 export default function TabGroup({ currentTab, onTabChange }: Props) {
   return (
     <Tabs value={currentTab} onValueChange={onTabChange} className="w-full">
-      <TabsList className="flex w-full rounded-full">
+      <TabsList className="flex w-full rounded-full bg-[#ffe6d2]">
         <TabsTrigger value="want" className="flex-1 text-center rounded-full">
           <div className="flex gap-2 items-center">
             <div>読みたい</div>
