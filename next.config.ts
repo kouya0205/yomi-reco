@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
     ],
     domains: ['books.google.com'],
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/bookshelf',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
