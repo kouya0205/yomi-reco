@@ -199,14 +199,14 @@ const BookModal: React.FC<BookModalProps> = ({ book, onClose, onSave }) => {
         <div className="mb-4">
           <label className="block mb-1">ステータス</label>
           <Select
-            value={status}
+            value={status.toString()}
             onValueChange={(value) => setStatus(value as unknown as Book['status'])}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder={status} />
             </SelectTrigger>
             <SelectContent>
               {statusOptions.map((statusOption) => (
-                <SelectItem key={statusOption} value={statusOption}>
+                <SelectItem key={statusOption} value={statusOption.toString()}>
                   {statusOption}
                 </SelectItem>
               ))}

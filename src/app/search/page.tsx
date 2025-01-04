@@ -113,7 +113,7 @@ export default function Search() {
           {selectedBook && (
             <div className="p-4 text-center">
               <Image
-                src={selectedBook.coverImage}
+                src={selectedBook.coverImage || '/images/no-image.png'}
                 alt={`${selectedBook.title}`}
                 width={64 * 1.8}
                 height={96 * 1.8}
