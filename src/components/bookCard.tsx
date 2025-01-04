@@ -21,15 +21,20 @@ export const BookCard: React.FC<BookCardProps> = ({
   return (
     <Card className="shadow-md rounded-xl pt-6 bg-orange-100">
       <CardContent className="flex flex-row gap-4">
-        <div className="flex-shrink-0">
-          {book.coverImage && (
+        <div className="w-32 h-44 flex-shrink-0">
+          {book.coverImage ? (
             <Image
               src={book.coverImage}
               alt={`${book.title}`}
               width={64 * 1.8}
               height={96 * 1.8}
+              layout="full"
               className="object-cover rounded-2xl"
             />
+          ) : (
+            <div className="w-full h-full bg-gray-300 rounded-2xl flex items-center justify-center">
+              <span className="text-gray-500">No Image</span>
+            </div>
           )}
         </div>
         <div className="flex flex-col m-4 gap-2 flex-1 min-w-0">
