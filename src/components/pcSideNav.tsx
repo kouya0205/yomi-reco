@@ -35,7 +35,7 @@ export default function PcSideNav() {
 
   const sideNavItems: SideNavItem[] = [
     { href: '/', icon: <Home />, label: 'ホーム' },
-    { href: '/mybooks', icon: <LibraryBig />, label: 'My本棚' },
+    { href: '/bookshelf', icon: <LibraryBig />, label: 'My本棚' },
     { href: '/search', icon: <Search />, label: '検索' },
     { href: '/scan', icon: <SquarePlus />, label: '本の登録' },
     { href: '/recommend', icon: <BookHeart />, label: 'おすすめ' },
