@@ -2,16 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  Bell,
-  Search,
-  Settings,
-  BookHeart,
-  LibraryBig,
-  Upload,
-  SquarePlus,
-  CircleUserRound,
-} from 'lucide-react';
+import { Search, Settings, BookHeart, LibraryBig, SquarePlus } from 'lucide-react';
 import { JSX } from 'react';
 
 interface NavItem {
@@ -24,11 +15,11 @@ export default function FooterNav() {
 
   // 必要に応じて好きな順番・アイコン・パスに変更してください。
   const navItems: NavItem[] = [
-    { href: '/mybooks', icon: <LibraryBig /> },
+    { href: '/bookshelf', icon: <LibraryBig /> },
     { href: '/search', icon: <Search /> },
     { href: '/scan', icon: <SquarePlus /> },
     { href: '/recommend', icon: <BookHeart /> },
-    { href: '/settings', icon: <CircleUserRound /> },
+    { href: '/settings', icon: <Settings /> },
   ];
 
   // アクティブ判定用
