@@ -13,13 +13,7 @@ interface BookCardProps {
   statusOptions: BookStatus[];
 }
 
-export const BookCard: React.FC<BookCardProps> = ({
-  book,
-  onEdit,
-  onDelete,
-  onStatusChange,
-  statusOptions,
-}: BookCardProps) => {
+export const BookCard: React.FC<BookCardProps> = ({ book, onStatusChange }: BookCardProps) => {
   return (
     <Card className="shadow-md rounded-xl pt-6 bg-orange-100">
       <CardContent className="flex flex-row gap-4">

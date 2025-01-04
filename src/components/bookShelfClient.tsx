@@ -118,7 +118,7 @@ export default function BookshelfClient({ books, user }: Props) {
       {/* 書籍表示 */}
       <div className="flex flex-col space-y-4">
         <p className="text-sm text-gray-600">{filteredBooks.length}冊</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredBooks.map((book, index) => (
             <UserBookCard key={index} book={book} onClick={() => handleBookClick(book)} />
           ))}

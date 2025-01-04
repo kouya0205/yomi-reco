@@ -1,9 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { Drawer, DrawerContent } from '@/components/ui/drawer';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Book, BookStatus } from 'types/types';
+import Link from 'next/link';
 
 export const statusOptions: BookStatus[] = [
   BookStatus.WantToRead,
@@ -21,6 +22,9 @@ export default function BookDetailDrawer({ isDrawerOpen, setIsDrawerOpen, select
   return (
     <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle></DrawerTitle>
+        </DrawerHeader>
         {selectedBook && (
           <div className="p-4 text-center">
             <Image
@@ -47,13 +51,29 @@ export default function BookDetailDrawer({ isDrawerOpen, setIsDrawerOpen, select
               ))}
             </div>
 
+            {/* 通販リンクなど */}
             <div className="m-6">
-              <h3 className="text-lg font-bold">通販で購入する</h3>
-              <div className="justify-center gap-4 m-4 grid grid-cols-2">
-                <div className="bg-gray-200 rounded-md">Amazon</div>
-                <div className="bg-gray-200 rounded-md">Rakuten</div>
-                <div className="bg-gray-200 rounded-md">ヨドバシ</div>
-                <div className="bg-gray-200 rounded-md">honto</div>
+              <div className="grid grid-cols-2 gap-4">
+                <Button variant="outline" asChild>
+                  <Link href="https://www.amazon.co.jp" target="_blank">
+                    Amazon
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="https://www.rakuten.co.jp" target="_blank">
+                    Rakuten
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="https://www.yodobashi.com" target="_blank">
+                    ヨドバシ.com
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="https://honto.jp" target="_blank">
+                    honto
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
