@@ -25,6 +25,7 @@ export default function BookDetailDialog({ open, onOpenChange, book, onStatusCha
 
   const handleStatusChange = (status: string) => {
     onStatusChange(status);
+    onOpenChange(false);
   };
 
   return (
