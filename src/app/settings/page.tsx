@@ -1,8 +1,23 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { createClient } from '@/utils/supabase/client';
+import { useEffect, useState } from 'react';
 
 export default function Settings() {
+  const [userId, setUserID] = useState<string | null>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) setUserID(user.id);
+    };
+    fetchUser();
+  }, []);
   return (
     <div className="container mx-auto max-w-2xl px-4 py-8">
       {/* Header */}
@@ -20,7 +35,7 @@ export default function Settings() {
           <div>
             <p className="text-sm font-medium">ユーザーID</p>
             <p className="text-sm text-gray-500">サポート時などに使用します</p>
-            <p className="mt-1 text-sm">ユーザーID</p>
+            <p className="mt-1 text-sm">{userId}</p>
           </div>
           <Separator />
           <div>
