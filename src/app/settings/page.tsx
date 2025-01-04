@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { signOut } from '@/hooks/useActions';
 import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 
@@ -43,9 +44,11 @@ export default function Settings() {
             <p className="text-sm text-gray-500">
               このデバイスからログアウトして、トップページに戻ります
             </p>
-            <Button variant="outline" className="mt-2">
-              ログアウト
-            </Button>
+            <form action={signOut}>
+              <Button type="submit" variant="outline" className="mt-2">
+                ログアウト
+              </Button>
+            </form>
           </div>
           <Separator />
           <div>
