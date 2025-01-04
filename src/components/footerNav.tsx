@@ -17,7 +17,7 @@ export default function FooterNav() {
   const navItems: NavItem[] = [
     { href: '/bookshelf', icon: <LibraryBig /> },
     { href: '/search', icon: <Search /> },
-    { href: '/scan', icon: <SquarePlus /> },
+    { href: '/timeline', icon: <SquarePlus /> },
     { href: '/recommend', icon: <BookHeart /> },
     { href: '/settings', icon: <Settings /> },
   ];
