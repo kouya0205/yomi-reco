@@ -35,17 +35,19 @@ export default function BookDetailDialog({ open, onOpenChange, book, onStatusCha
         // md未満なら下からフェードインするようにshadcn/uiのクラスなどを調整
       >
         <DialogHeader>
-          <DialogTitle className="text-lg md:text-xl">{book.books.title}</DialogTitle>
+          <DialogTitle className="text-lg md:text-xl"></DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center space-y-4">
           <Image
             src={book.books.cover_image ?? '/noimage.jpg'}
             alt={book.books.title}
-            width={150}
-            height={220}
+            width={64 * 1.8}
+            height={96 * 1.8}
+            className="mx-auto w-40 h-60 rounded-md m-4"
           />
-          <p>著者: {book.books.author}</p>
-          <p>出版社: {book.books.publisher}</p>
+          <div className="text-lg font-bold text-center">{book.books.title}</div>
+          <p className="text-sm text-gray-600">著者: {book.books.author}</p>
+          <p className="text-sm text-gray-600">出版社: {book.books.publisher}</p>
 
           {/* ステータスボタン */}
           <div className="flex items-center space-x-2 mt-2">
@@ -67,7 +69,7 @@ export default function BookDetailDialog({ open, onOpenChange, book, onStatusCha
           </div>
 
           {/* 通販リンクなど */}
-          <div className="flex flex-col space-y-2 mt-4">
+          <div className="grid grid-cols-2 gap-4">
             <Button variant="outline" asChild>
               <Link href="https://www.amazon.co.jp" target="_blank">
                 Amazon
