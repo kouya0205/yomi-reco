@@ -1,9 +1,11 @@
 'use client';
 
-import React from 'react';
+import { useEffect, useState } from 'react';
 import TabGroup from '@/components/tabGroupe';
 import BookDetailDialog from '@/components/bookDetailDialog';
 import UserBookCard from '@/components/userBookCard';
+import { User } from 'types';
+import { useRouter } from 'next/navigation';
 
 // APIから取得したデータの型例
 export type BookData = {
@@ -19,14 +21,16 @@ export type BookData = {
 
 type Props = {
   books: BookData[];
+  user: User;
 };
 
-export default function BookshelfClient({ books }: Props) {
-  const [currentTab, setCurrentTab] = React.useState<'want' | 'reading' | 'done'>('want');
-  const [filteredBooks, setFilteredBooks] = React.useState<BookData[]>([]);
-  const [searchText, setSearchText] = React.useState('');
-  const [selectedBook, setSelectedBook] = React.useState<BookData | null>(null);
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+export default function BookshelfClient({ books, user }: Props) {
+  const [currentTab, setCurrentTab] = useState<'want' | 'reading' | 'done'>('want');
+  const [filteredBooks, setFilteredBooks] = useState<BookData[]>([]);
+  const [searchText, setSearchText] = useState('');
+  const [selectedBook, setSelectedBook] = useState<BookData | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const router = useRouter();
 
   // タブ切り替え
   const handleTabChange = (tab: string) => {
@@ -35,7 +39,7 @@ export default function BookshelfClient({ books }: Props) {
   };
 
   // 書籍ステータスフィルタや検索
-  React.useEffect(() => {
+  useEffect(() => {
     const filtered = books
       .filter((b) => b.status === currentTab) // タブにあったステータスのみ
       .filter((b) => {
@@ -54,13 +58,14 @@ export default function BookshelfClient({ books }: Props) {
 
   // ステータス更新
   const updateStatus = async (status: string) => {
+    console.log('updateStatus:', status);
     if (!selectedBook) return;
     try {
       const res = await fetch('/api/bookshelf', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: 'example-user-id', // 実際は認証情報などから取得
+          user_id: user.id,
           book_id: selectedBook.book_id,
           newStatus: status,
         }),
@@ -89,6 +94,7 @@ export default function BookshelfClient({ books }: Props) {
           return title.includes(searchText);
         });
       setFilteredBooks(filtered);
+      router.refresh();
     } catch (err) {
       console.error(err);
     }
