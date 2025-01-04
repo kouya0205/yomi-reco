@@ -29,6 +29,7 @@ export default function SearchResults({
               onEdit={onEdit}
               onDelete={onDelete}
               onStatusChange={onStatusChange}
+              statusOptions={[BookStatus.WantToRead, BookStatus.Reading, BookStatus.Read]}
             />
           </div>
         ))}

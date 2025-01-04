@@ -5,13 +5,13 @@ import SearchForm from '@/components/search/searchForm';
 import SearchResults from '@/components/search/searchResult';
 import { useState } from 'react';
 import { User } from 'types';
-import { Book, BookStatus } from 'types/types';
+import { Book, BookStatus, UserBook } from 'types/types';
 
 export default function SearchClient({
   user_book,
   user,
 }: {
-  user_book: Book[];
+  user_book: UserBook[] | null;
   user: User | null;
 }) {
   console.log('user_book:', user_book);
@@ -42,7 +42,7 @@ export default function SearchClient({
       // 例: handleSearch後
       setBooks(
         data.items.map((item: any) => {
-          const existing = user_book.find((ub) => ub.book_id === item.id);
+          const existing = user_book?.find((ub) => ub.book_id === item.id);
           return {
             id: item.id,
             title: item.volumeInfo.title,

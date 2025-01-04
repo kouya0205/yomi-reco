@@ -57,12 +57,7 @@ export type AuthConfig = {
 
 export type User = {
   id: string;
-  name: string;
-  email?: string | null; // email, password_hashはAuth管理方式により省略可
-  password_hash?: string | null;
-  avatar_url?: string | null;
-  created_at: string;
-  updated_at: string;
+  email?: string;
 };
 
 export type Book = {

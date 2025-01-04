@@ -24,6 +24,7 @@ export default async function BookshelfPage() {
     // 必要に応じてエラーハンドリング
     return notFound();
   }
+  console.log('user:', user);
 
   // 取得したデータをクライアントコンポーネントへ渡す
   return (

@@ -15,6 +15,11 @@ export interface AffiliateLinks {
   honto?: string;
 }
 
+export interface UserBook {
+  book_id: string;
+  status: BookStatus;
+}
+
 // 本の情報を格納するインタフェース
 export interface Book {
   id: string; // ユニークな識別子
