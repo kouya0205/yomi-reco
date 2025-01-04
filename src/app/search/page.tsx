@@ -4,6 +4,7 @@ import { BookCard } from '@/components/bookCard';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
+import { Bookmark, BookmarkCheck, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -124,7 +125,7 @@ export default function Search() {
               <p className="text-sm text-gray-600">{selectedBook.author}</p>
               <p className="text-sm text-gray-600">{selectedBook.publisher}</p>
 
-              <div className="mt-4 flex justify-center gap-4">
+              {/* <div className="mt-4 flex justify-center gap-4">
                 {statusOptions.map((status) => (
                   <Button
                     key={status}
@@ -133,17 +134,49 @@ export default function Search() {
                     {status === BookStatus.WantToRead && '読みたい'}
                     {status === BookStatus.Reading && '読んでる'}
                     {status === BookStatus.Read && '読んだ'}
+                    <Bookmark />
                   </Button>
                 ))}
+              </div> */}
+
+              <div className="mt-4 flex justify-center gap-4">
+                {/* 読みたい */}
+                <Button
+                  variant={selectedBook.status === BookStatus.WantToRead ? 'default' : 'outline'}
+                  onClick={() =>
+                    setSelectedBook({ ...selectedBook, status: BookStatus.WantToRead })
+                  }
+                  className="flex items-center space-x-2 px-4 py-2 rounded-md">
+                  <Bookmark />
+                  <span>読みたい</span>
+                </Button>
+
+                {/* 読んでる */}
+                <Button
+                  variant={selectedBook.status === BookStatus.Reading ? 'default' : 'outline'}
+                  onClick={() => setSelectedBook({ ...selectedBook, status: BookStatus.Reading })}
+                  className="flex items-center space-x-2 px-4 py-2 rounded-md">
+                  <BookOpen />
+                  <span>読んでる</span>
+                </Button>
+
+                {/* 読んだ */}
+                <Button
+                  variant={selectedBook.status === BookStatus.Read ? 'default' : 'outline'}
+                  onClick={() => setSelectedBook({ ...selectedBook, status: BookStatus.Read })}
+                  className="flex items-center space-x-2 px-4 py-2 rounded-md">
+                  <BookmarkCheck />
+                  <span>読んだ</span>
+                </Button>
               </div>
 
               <div className="m-6">
                 <h3 className="text-lg font-bold">通販で購入する</h3>
                 <div className="justify-center gap-4 m-4 grid grid-cols-2">
-                  <div className="bg-gray-200 rounded-md">Amazon</div>
-                  <div className="bg-gray-200 rounded-md">Rakuten</div>
-                  <div className="bg-gray-200 rounded-md">ヨドバシ</div>
-                  <div className="bg-gray-200 rounded-md">honto</div>
+                  <div className="bg-gray-200 rounded-md p-3">Amazon</div>
+                  <div className="bg-gray-200 rounded-md p-3">Rakuten</div>
+                  <div className="bg-gray-200 rounded-md p-3">ヨドバシ</div>
+                  <div className="bg-gray-200 rounded-md p-3">honto</div>
                 </div>
               </div>
             </div>
