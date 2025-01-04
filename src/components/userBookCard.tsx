@@ -37,21 +37,25 @@ export default function UserBookCard({ book, onClick }: Props) {
           <div className="font-bold text-md h-12 line-clamp-2">{books.title}</div>
           <div className="font-thin text-sm overflow-hidden text-gray-400">{books.author}</div>
           <div className="flex flex-row gap-4">
-            <div className="cursor-pointer">
-              <Bookmark />
+            {/* <div className="cursor-pointer "> */}
+            {/* 読みたいアイコン */}
+            <div
+              className={`cursor-pointer ${status === 'want' ? 'text-orange-400' : 'text-gray-400'}`}>
+              <Bookmark className="w-6 h-6" fill={status === 'want' ? 'currentColor' : 'none'} />
             </div>
 
             {/* 読んでる */}
-            <div className="cursor-pointer">
-              <BookOpen />
+            <div
+              className={`cursor-pointer ${status === 'reading' ? 'text-orange-400' : 'text-gray-400'}`}>
+              <BookOpen className="w-6 h-6" fill={status === 'reading' ? 'currentColor' : 'none'} />
             </div>
 
             {/* 読んだ */}
-            <div className="cursor-pointer">
-              <SquareCheck />
+            <div
+              className={`cursor-pointer ${status === 'done' ? 'text-orange-400' : 'text-gray-400'}`}>
+              <SquareCheck className="w-6 h-6" fill={status === 'done' ? 'currentColor' : 'none'} />
             </div>
           </div>
-          <p>ステータス: {status}</p>
         </div>
       </CardContent>
     </Card>
