@@ -1,7 +1,9 @@
 'use client';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Book, BookStatus } from 'types/types';
 import Image from 'next/image';
+import { Bookmark, BookOpen, SquareCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface BookCardProps {
   book: Book;
@@ -36,9 +38,25 @@ export const BookCard: React.FC<BookCardProps> = ({
           <div className="font-bold text-xl">{book.title}</div>
           <div className="font-thin text-sm overflow-hidden text-gray-400">{book.author}</div>
           <div className="flex flex-row gap-4">
-            <div className="w-12 h-12 bg-red-300"></div>
-            <div className="w-12 h-12 bg-blue-300"></div>
-            <div className="w-12 h-12 bg-green-300"></div>
+            <div
+              onClick={() => onStatusChange(book.id, BookStatus.WantToRead)}
+              className="cursor-pointer">
+              <Bookmark />
+            </div>
+
+            {/* 読んでる */}
+            <div
+              onClick={() => onStatusChange(book.id, BookStatus.Reading)}
+              className="cursor-pointer">
+              <BookOpen />
+            </div>
+
+            {/* 読んだ */}
+            <div
+              onClick={() => onStatusChange(book.id, BookStatus.Read)}
+              className="cursor-pointer">
+              <SquareCheck />
+            </div>
           </div>
           {/* <div className="flex flex-row">{book.status}</div> */}
         </div>
