@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Settings, BookHeart, LibraryBig, SquarePlus } from 'lucide-react';
+import { Search, Settings, BookHeart, LibraryBig, SquarePlus, Bell } from 'lucide-react';
 import { JSX } from 'react';
 
 interface NavItem {
@@ -18,7 +18,8 @@ export default function FooterNav() {
     { href: '/bookshelf', icon: <LibraryBig /> },
     { href: '/search', icon: <Search /> },
     { href: '/timeline', icon: <SquarePlus /> },
-    { href: '/recommend', icon: <BookHeart /> },
+    // { href: '/recommend', icon: <BookHeart /> },
+    { href: '/notifications', icon: <Bell /> },
     { href: '/settings', icon: <Settings /> },
   ];
 
