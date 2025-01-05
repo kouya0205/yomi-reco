@@ -58,6 +58,8 @@ export type AuthConfig = {
 export type User = {
   id: string;
   email?: string;
+  name?: string;
+  avatar_url?: string;
 };
 
 export type Book = {
