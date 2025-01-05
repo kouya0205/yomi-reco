@@ -1,7 +1,7 @@
 import { ScrollBar } from '@/components/ui/scroll-area';
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import { User } from 'types';
 
 interface AvatarListProps {
@@ -15,8 +15,8 @@ export const AvatarList: React.FC<AvatarListProps> = ({ users }: AvatarListProps
       <ScrollArea className="w-full rounded-md overflow-x-auto">
         <div className="flex gap-4 p-4">
           {users.map((user, index) => (
-            <div>
-              <Link href={`/bookshelf/${user.id}`} key={index}>
+            <div key={index}>
+              <Link href={`/bookshelf/${user.user_id}`}>
                 <div className="flex flex-col items-center space-y-2 cursor-pointer">
                   <Avatar className="w-20 h-20 ring-2 ring-offset-2 ring-blue-500 hover:ring-offset-blue-300 transition-all">
                     <AvatarImage src={user.avatar_url || ''} />
