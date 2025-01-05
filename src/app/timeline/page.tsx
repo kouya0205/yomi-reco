@@ -27,6 +27,14 @@ export default async function Timeline() {
   const { data: users, error } = await supabase.from('users').select('*').neq('user_id', user.id);
 
   console.log('users:', users);
+  // 本の一覧（最新10件）を取得
+  const { data: books } = await supabase
+    .from('user_book')
+    .select('*, books(*)')
+    .order('created_at', { ascending: false })
+    .limit(10);
+
+  console.log('latest_books:', books);
 
   if (error) {
     console.error('Error fetching users:', error);
