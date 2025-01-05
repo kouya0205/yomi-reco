@@ -2,7 +2,12 @@ import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import BookshelfClient from '@/components/bookShelfClient';
 
-export default async function BookshelfPage() {
+interface UserBookshelfPageProps {
+  params: { id: string }; // [id]の型定義
+}
+
+export default async function UserBookshelfPage({ params }: UserBookshelfPageProps) {
+  const { id } = params;
   const supabase = await createClient();
   const {
     data: { user },
@@ -11,13 +16,13 @@ export default async function BookshelfPage() {
     redirect('/auth');
   }
 
-  // 例: user_book / books テーブルを結合して書籍情報を取得
+  // 他人の本棚データを取得
   const { data: books, error } = await supabase
     .from('user_book')
     .select(`*, books(*)`)
-    .eq('user_id', user?.id);
+    .eq('user_id', id);
 
-  console.log('books:', books);
+  console.log('books:', id);
 
   if (error) {
     console.error('Error fetching books:', error);
