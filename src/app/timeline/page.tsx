@@ -27,8 +27,8 @@ export default function Timeline() {
           <ScrollArea className="w-full rounded-md overflow-x-auto">
             <div className="flex gap-4 p-4">
               {avatarData.map((avatar, index) => (
-                <Link href={'/bookshelf/id'}>
-                  <div key={index} className="flex flex-col items-center space-y-2 cursor-pointer">
+                <Link href={'/bookshelf/id'} key={index}>
+                  <div className="flex flex-col items-center space-y-2 cursor-pointer">
                     <Avatar className="w-20 h-20 ring-2 ring-offset-2 ring-blue-500 hover:ring-offset-blue-300 transition-all">
                       <AvatarImage src={avatar.src} />
                       <AvatarFallback>{avatar.fallback}</AvatarFallback>
