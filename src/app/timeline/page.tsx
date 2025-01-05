@@ -33,15 +33,6 @@ export default async function Timeline() {
     // 必要に応じてエラーハンドリング
     return notFound();
   }
-
-  const avatarData = [
-    { src: 'https://github.com/shadcn.png', fallback: 'CN' },
-    { src: 'https://randomuser.me/api/portraits/men/1.jpg', fallback: 'M1' },
-    { src: 'https://randomuser.me/api/portraits/women/2.jpg', fallback: 'W2' },
-    { src: 'https://randomuser.me/api/portraits/men/3.jpg', fallback: 'M3' },
-    { src: 'https://randomuser.me/api/portraits/women/4.jpg', fallback: 'W4' },
-    { src: 'https://randomuser.me/api/portraits/men/5.jpg', fallback: 'M5' },
-  ];
   return (
     <main className="p-4">
       {/* 取得したデータを渡す */}
