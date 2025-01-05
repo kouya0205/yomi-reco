@@ -12,6 +12,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+import Image from 'next/image';
 
 export default async function Timeline() {
   // supabaseの定義
@@ -51,33 +52,33 @@ export default async function Timeline() {
           <div className="m-4">
             <Carousel>
               <CarouselContent>
-                {Array.from({ length: 5 }).map((_, index) => (
+                {books?.map((book, index) => (
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1">
                       <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <span className="text-3xl font-semibold">{index + 1}</span>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-          </div>
-
-          <div className="text-2xl font-bold">今月のランキングTop10</div>
-          <div className="m-4">
-            <Carousel>
-              <CarouselContent>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-1">
-                      <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <span className="text-3xl font-semibold">{index + 1}</span>
+                        <CardContent className="flex flex-col items-center justify-center p-6">
+                          {book.books.cover_image ? (
+                            <Image
+                              src={book.books.cover_image}
+                              alt={`${book.title}`}
+                              width={64 * 1.8}
+                              height={96 * 1.8}
+                              layout="full"
+                              className="object-cover rounded-2xl"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-300 rounded-2xl flex items-center justify-center">
+                              <span className="text-gray-500">No Image</span>
+                            </div>
+                          )}
+                          <div className="flex flex-col m-4 gap-2 flex-1 min-w-0">
+                            <div className="font-bold text-md h-12 line-clamp-2">
+                              {book.books.title}
+                            </div>
+                            <div className="font-thin text-sm overflow-hidden text-gray-400">
+                              {book.books.author}
+                            </div>
+                          </div>
                         </CardContent>
                       </Card>
                     </div>
