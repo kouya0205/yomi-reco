@@ -7,9 +7,9 @@ export default async function CheckInviteEmailPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user) {
-    redirect('/mypage');
-  }
+  // if (user) {
+  //   redirect('/bookshelf');
+  // }
   return (
     <div>
       <h1>Check Invite Email</h1>

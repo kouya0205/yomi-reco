@@ -7,9 +7,6 @@ export async function PATCH(request: Request) {
     const body = await request.json();
 
     const { user_id, book_id, status } = body;
-    console.log('book_id', book_id);
-    console.log('user_id', user_id);
-    console.log('status', status);
 
     const { error } = await supabase
       .from('user_book')

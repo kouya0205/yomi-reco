@@ -14,7 +14,6 @@ export default function SearchClient({
   user_book: UserBook[] | null;
   user: User | null;
 }) {
-  console.log('user_book:', user_book);
   const [query, setQuery] = useState('');
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +36,6 @@ export default function SearchClient({
         throw new Error(error || 'Fetch Error');
       }
       const data = JSON.parse(responseBody);
-      console.log('data:', data);
 
       // 例: handleSearch後
       setBooks(

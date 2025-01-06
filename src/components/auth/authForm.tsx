@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { authConfig } from '@/config/auth';
 import { Fragment, useState } from 'react';
+import UserIdForm from '@/components/auth/userIdForm';
 
 export const AuthForm = () => {
   const [step, setStep] = useState<number>(0);
@@ -33,7 +34,7 @@ export const AuthForm = () => {
                   <CardTitle>{authConfig.login.title}</CardTitle>
                   <CardDescription>{authConfig.login.description}</CardDescription>
                 </CardHeader>
-                <LoginForm />
+                <LoginForm handleNext={handleNext} />
                 <CardContent>
                   <SocialAccount tab="login" />
                 </CardContent>
@@ -55,7 +56,7 @@ export const AuthForm = () => {
         );
       case 1:
         // 登録後にユニークIDを設定するためのform画面
-        return <></>;
+        return <UserIdForm />;
       default:
         return null;
     }

@@ -1,8 +1,10 @@
+'use client';
+
 import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
 import { CircleChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { FC, useActionState } from 'react';
+import { FC, useActionState, useEffect } from 'react';
 
 import { authConfig } from '@/config/auth';
 import { loginSchema } from '@/config/schema';
@@ -14,7 +16,7 @@ import { CardContent, CardFooter } from '@/components/ui/card';
 import { Separate } from '@/components/separate';
 import { Button } from '@/components/ui/button';
 
-export const LoginForm: FC = () => {
+export const LoginForm = ({ handleNext }: { handleNext: () => void }) => {
   const [lastResult, action, isPending] = useActionState(emailLogin, undefined);
   const [form, fields] = useForm({
     // 前回の送信結果を同期
@@ -28,6 +30,14 @@ export const LoginForm: FC = () => {
     // blurイベント発生時にフォームを検証する
     shouldValidate: 'onBlur',
   });
+
+  useEffect(() => {
+    if (lastResult?.status === 'success') {
+      // サインアップに成功したので、stepを進める
+      console.log('サインアップに成功しました');
+      handleNext();
+    }
+  }, [lastResult, handleNext]);
 
   return (
     <>
