@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { signOut } from '@/hooks/useActions';
 import { createClient } from '@/utils/supabase/client';
+import { Link2, Link2Icon, LinkIcon, SquareArrowOutUpRight } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function Settings() {
@@ -67,22 +69,17 @@ export default function Settings() {
           <CardTitle>サポート</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex justify-center items-center">
-            <p className="text-sm font-medium">バグ報告</p>
-            <p className="text-sm text-gray-500">サービスのバグや報告を見つけた場合はこちら</p>
-            <Button variant="link" className="text-sm">
-              →
-            </Button>
-          </div>
-          <Separator />
-          <div className="flex justify-center items-center">
-            <div>
-              <p className="text-sm font-medium">そのほかのお問い合わせ</p>
-              <p className="text-sm text-gray-500">そのほか、サービスへのお問い合わせはこちら</p>
-              <Button variant="link" className="text-sm">
-                →
+          <div>
+            <p className="text-sm font-medium">お問い合わせ</p>
+            <p className="text-sm text-gray-500">サービスのバグや報告 / お問い合わせはこちら</p>
+            <Link href={'/'}>
+              <Button type="submit" variant="outline" className="mt-2">
+                <div className="flex flex-row items-center gap-2">
+                  <div>お問い合わせ</div>
+                  <SquareArrowOutUpRight />
+                </div>
               </Button>
-            </div>
+            </Link>
           </div>
         </CardContent>
       </Card>

@@ -10,8 +10,8 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="bg-[#fff3e9] text-gray-500">
-      <div className="relative flex items-center justify-center p-3 lg:hidden">
+    <header className="bg-[#fff3e9] text-gray-500 w-full">
+      <div className="relative flex items-center justify-center p-3">
         <Image src="/logo.svg" alt="logo" width={200} height={30} />
         {user ? (
           <div></div>
