@@ -53,6 +53,18 @@ export type AuthConfig = {
       placeholder: string;
     };
   };
+  userId: {
+    title: string;
+    button: string;
+    id: {
+      label: string;
+      placeholder: string;
+    };
+    username: {
+      label: string;
+      placeholder: string;
+    };
+  };
 };
 
 export type User = {

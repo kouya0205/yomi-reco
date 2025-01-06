@@ -16,7 +16,6 @@ type Props = {
 };
 
 export default function UserBookCard({ book, onClick, user }: Props) {
-  console.log('book:', book);
   const { books, status } = book;
   const [error, setError] = useState('');
   const router = useRouter();

@@ -39,4 +39,16 @@ export const authConfig: AuthConfig = {
       placeholder: '••••••',
     },
   },
+  userId: {
+    title: 'ユーザーIDの設定',
+    button: '設定',
+    id: {
+      label: 'ユーザーID',
+      placeholder: 'ユニークなユーザーIDを設定してください。',
+    },
+    username: {
+      label: 'ユーザー名',
+      placeholder: 'ユーザー名を入力',
+    },
+  },
 };

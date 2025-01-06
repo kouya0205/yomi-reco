@@ -5,7 +5,7 @@ import { Provider } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 
 import { supabaseErrorMessages } from '@/config/errorMessage';
-import { loginSchema, signupSchema } from '@/config/schema';
+import { loginSchema, signupSchema, userIdSchema } from '@/config/schema';
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
@@ -35,6 +35,15 @@ export async function emailLogin(prevState: unknown, formData: FormData) {
       formErrors: [errorMessage],
     });
   }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const userId = await supabase.from('users').select('id').eq('user_id', user?.id).maybeSingle();
+
+  if (userId) {
+    return redirect('/bookshelf');
+  }
 
   return submission.reply();
 }
@@ -46,7 +55,6 @@ export async function signup(prevState: unknown, formData: FormData) {
   });
 
   if (submission.status !== 'success') {
-    console.log(submission);
     return submission.reply();
   }
 
@@ -74,6 +82,59 @@ export async function signup(prevState: unknown, formData: FormData) {
     });
   }
   return submission.reply();
+}
+
+export async function userId(prevState: unknown, formData: FormData) {
+  const supabase = await createClient();
+  const submission = parseWithZod(formData, {
+    schema: userIdSchema,
+  });
+
+  // バリデーションエラーならそのまま返す
+  if (submission.status !== 'success') {
+    return submission.reply();
+  }
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return redirect('/auth');
+  }
+
+  const name = formData.get('username') as string;
+  const id = formData.get('id') as string;
+
+  // ここで再度 重複チェックしておくとベター
+  const { data: existing, error: checkError } = await supabase
+    .from('users')
+    .select('id')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (checkError) {
+    // DBエラーの場合は submission.reply() で返してもOK
+    return submission.reply({ formErrors: ['サーバーエラーが発生しました'] });
+  }
+
+  if (existing) {
+    // すでに使われていたらエラーを返す
+    return submission.reply({
+      fieldErrors: {
+        id: ['このIDは既に使われています'],
+      },
+    });
+  }
+
+  // ユニークID & ユーザーネームを DB に挿入
+  const { error } = await supabase.from('users').update({ id, name }).match({ user_id: user.id });
+
+  if (error) {
+    return submission.reply({ formErrors: ['挿入に失敗しました'] });
+  }
+
+  // 成功時は success を返す
+  return redirect('/bookshelf');
 }
 
 export async function socialSignIn(provider: Provider) {
@@ -111,5 +172,5 @@ export async function socialSignIn(provider: Provider) {
 export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect('/');
+  redirect('/auth');
 }

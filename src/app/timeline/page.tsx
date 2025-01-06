@@ -26,8 +26,6 @@ export default async function Timeline() {
   // ユーザーの一覧（自分を除く）を取得
   const { data: users, error } = await supabase.from('users').select('*').neq('user_id', user.id);
 
-  console.log('users:', users);
-
   if (error) {
     console.error('Error fetching users:', error);
     // 必要に応じてエラーハンドリング

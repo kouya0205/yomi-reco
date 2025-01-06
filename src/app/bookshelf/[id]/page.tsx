@@ -22,14 +22,11 @@ export default async function UserBookshelfPage({ params }: UserBookshelfPagePro
     .select(`*, books(*)`)
     .eq('user_id', id);
 
-  console.log('books:', id);
-
   if (error) {
     console.error('Error fetching books:', error);
     // 必要に応じてエラーハンドリング
     return notFound();
   }
-  console.log('user:', user);
 
   // 取得したデータをクライアントコンポーネントへ渡す
   return (

@@ -17,14 +17,11 @@ export default async function BookshelfPage() {
     .select(`*, books(*)`)
     .eq('user_id', user?.id);
 
-  console.log('books:', books);
-
   if (error) {
     console.error('Error fetching books:', error);
     // 必要に応じてエラーハンドリング
     return notFound();
   }
-  console.log('user:', user);
 
   // 取得したデータをクライアントコンポーネントへ渡す
   return (
