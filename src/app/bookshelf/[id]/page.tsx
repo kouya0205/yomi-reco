@@ -2,12 +2,8 @@ import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import BookshelfClient from '@/components/bookShelfClient';
 
-interface UserBookshelfPageProps {
-  params: { id: string }; // [id]の型定義
-}
-
-export default async function UserBookshelfPage({ params }: UserBookshelfPageProps) {
-  const { id } = params;
+export default async function UserBookshelfPage({ params }: { params: Promise<{ id: string }> }) {
+  const id = (await params).id;
   const supabase = await createClient();
   const {
     data: { user },
