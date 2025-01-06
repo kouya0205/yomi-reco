@@ -36,7 +36,7 @@ export async function emailLogin(prevState: unknown, formData: FormData) {
     });
   }
 
-  redirect('/');
+  return submission.reply();
 }
 
 export async function signup(prevState: unknown, formData: FormData) {
@@ -46,6 +46,7 @@ export async function signup(prevState: unknown, formData: FormData) {
   });
 
   if (submission.status !== 'success') {
+    console.log(submission);
     return submission.reply();
   }
 
@@ -58,7 +59,7 @@ export async function signup(prevState: unknown, formData: FormData) {
     password: password,
     options: {
       data: {
-        name: name,
+        // name: name,
         email: email,
       },
     },
@@ -72,8 +73,7 @@ export async function signup(prevState: unknown, formData: FormData) {
       formErrors: [errorMessage],
     });
   }
-
-  redirect('/');
+  return submission.reply();
 }
 
 export async function socialSignIn(provider: Provider) {
