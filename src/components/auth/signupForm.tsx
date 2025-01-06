@@ -2,7 +2,7 @@ import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
 import { CircleChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { FC, useActionState } from 'react';
+import { FC, useActionState, useEffect } from 'react';
 
 import { authConfig } from '@/config/auth';
 import { signupSchema } from '@/config/schema';
@@ -14,8 +14,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Separate } from '@/components/separate';
 
-export const SignupForm: FC = () => {
-  const [lastResult, action] = useActionState(signup, undefined);
+export const SignupForm = ({ handleNext }: { handleNext: () => void }) => {
+  const [lastResult, action, isPending] = useActionState(signup, undefined);
   const [form, fields] = useForm({
     // 前回の送信結果を同期
     lastResult,
@@ -28,6 +28,16 @@ export const SignupForm: FC = () => {
     // blurイベント発生時にフォームを検証する
     shouldValidate: 'onBlur',
   });
+
+  // ★↓↓ サインアップ成功時にステップを進めたい場合はここで判定
+  useEffect(() => {
+    if (lastResult?.status === 'success') {
+      // サインアップに成功したので、stepを進める
+      console.log('サインアップに成功しました');
+      handleNext();
+    }
+  }, [lastResult, handleNext]);
+
   return (
     <>
       <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
@@ -49,19 +59,6 @@ export const SignupForm: FC = () => {
             <div className="text-xs text-red-600">{fields.email.errors}</div>
           </div>
           <div className="space-y-1">
-            <Label htmlFor="username">{authConfig.signup.username.label}</Label>
-            <Input
-              id="username"
-              type="text"
-              placeholder={authConfig.signup.username.placeholder}
-              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
-              key={fields.username.key}
-              name={fields.username.name}
-              defaultValue={fields.username.initialValue}
-            />
-            <div className="text-xs text-red-600">{fields.username.errors}</div>
-          </div>
-          <div className="space-y-1">
             <Label htmlFor="password">{authConfig.signup.password.label}</Label>
             <Input
               id="password"
@@ -73,19 +70,6 @@ export const SignupForm: FC = () => {
               defaultValue={fields.password.initialValue}
             />
             <div className="text-xs text-red-600">{fields.password.errors}</div>
-          </div>
-          <div className="space-y-1">
-            <Label htmlFor="confirmPassword">{authConfig.signup.confirmPassword.label}</Label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              placeholder={authConfig.signup.confirmPassword.placeholder}
-              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
-              key={fields.confirmPassword.key}
-              name={fields.confirmPassword.name}
-              defaultValue={fields.confirmPassword.initialValue}
-            />
-            <div className="text-xs text-red-600">{fields.confirmPassword.errors}</div>
           </div>
           {/* checkbox */}
           <div className="flex items-center space-x-2">
@@ -109,8 +93,11 @@ export const SignupForm: FC = () => {
           <div className="text-xs text-red-600">{fields.acceptCheckbox.errors}</div>
         </CardContent>
         <CardFooter className="flex flex-col py-0">
-          <Button className="w-full bg-[#ffb061] text-white font-bold hover:bg-[#ffc890]">
-            {authConfig.signup.button} <CircleChevronRight className="ml-1 h-4 w-4" />
+          <Button
+            className="w-full bg-[#ffb061] text-white font-bold hover:bg-[#ffc890]"
+            disabled={isPending}>
+            {isPending ? 'ログイン中...' : authConfig.signup.button}{' '}
+            <CircleChevronRight className="ml-1 h-4 w-4" />
           </Button>
           <Separate />
         </CardFooter>
