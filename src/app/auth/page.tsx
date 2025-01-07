@@ -8,7 +8,9 @@ export default async function AuthPage() {
     data: { user },
   } = await supabase.auth.getUser();
   const { data } = await supabase.from('users').select('id').eq('user_id', user?.id);
-  // アカウントはあるが、usersテーブルのidにデータがない場合は、usernameとidを登録するページに飛ばしたい。step = 1
+  if (user && data?.[0]?.id !== user.id) {
+    redirect('/bookshelf');
+  }
   return (
     <>
       <div className="flex min-h-screen flex-col items-center justify-between pt-10 lg:pt-20">

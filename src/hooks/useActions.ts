@@ -41,7 +41,7 @@ export async function emailLogin(prevState: unknown, formData: FormData) {
 
   const userId = await supabase.from('users').select('id').eq('user_id', user?.id).maybeSingle();
 
-  if (userId) {
+  if (user?.id !== userId.data?.id) {
     return redirect('/bookshelf');
   }
 
@@ -163,6 +163,7 @@ export async function socialSignIn(provider: Provider) {
       redirectTo: getURL('/auth/callback'),
     },
   });
+  console.log(data);
   if (error) {
     return { success: false, message: 'OAuth認証に失敗しました' };
   }
