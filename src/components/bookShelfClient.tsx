@@ -58,7 +58,6 @@ export default function BookshelfClient({ books, user }: Props) {
 
   // ステータス更新
   const updateStatus = async (status: string) => {
-    console.log('updateStatus:', status);
     if (!selectedBook) return;
     try {
       const res = await fetch('/api/bookshelf', {

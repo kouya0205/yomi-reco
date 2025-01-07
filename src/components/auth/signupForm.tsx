@@ -1,8 +1,10 @@
+'use client';
+
 import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
 import { CircleChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { FC, useActionState, useEffect } from 'react';
+import { FC, useActionState, useEffect, useState } from 'react';
 
 import { authConfig } from '@/config/auth';
 import { signupSchema } from '@/config/schema';
@@ -13,8 +15,10 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Separate } from '@/components/separate';
+import { PasswordInput } from '@/components/ui/passwordInput';
 
 export const SignupForm = ({ handleNext }: { handleNext: () => void }) => {
+  const [password, setPassword] = useState('');
   const [lastResult, action, isPending] = useActionState(signup, undefined);
   const [form, fields] = useForm({
     // 前回の送信結果を同期
@@ -60,9 +64,20 @@ export const SignupForm = ({ handleNext }: { handleNext: () => void }) => {
           </div>
           <div className="space-y-1">
             <Label htmlFor="password">{authConfig.signup.password.label}</Label>
-            <Input
+            {/* <Input
               id="password"
               type="password"
+              placeholder={authConfig.signup.password.placeholder}
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
+              key={fields.password.key}
+              name={fields.password.name}
+              defaultValue={fields.password.initialValue}
+            /> */}
+            <PasswordInput
+              id="password"
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              autoComplete="current-password"
               placeholder={authConfig.signup.password.placeholder}
               className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
               key={fields.password.key}

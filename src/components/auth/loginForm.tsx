@@ -1,8 +1,10 @@
+'use client';
+
 import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
 import { CircleChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { FC, useActionState } from 'react';
+import { FC, ReactEventHandler, useActionState, useEffect, useState } from 'react';
 
 import { authConfig } from '@/config/auth';
 import { loginSchema } from '@/config/schema';
@@ -13,8 +15,10 @@ import { Input } from '@/components/ui/input';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { Separate } from '@/components/separate';
 import { Button } from '@/components/ui/button';
+import { PasswordInput } from '@/components/ui/passwordInput';
 
-export const LoginForm: FC = () => {
+export const LoginForm = ({ handleNext }: { handleNext: () => void }) => {
+  const [password, setPassword] = useState('');
   const [lastResult, action, isPending] = useActionState(emailLogin, undefined);
   const [form, fields] = useForm({
     // 前回の送信結果を同期
@@ -26,8 +30,16 @@ export const LoginForm: FC = () => {
     },
 
     // blurイベント発生時にフォームを検証する
-    shouldValidate: 'onBlur',
+    shouldValidate: 'onInput',
   });
+
+  useEffect(() => {
+    if (lastResult?.status === 'success') {
+      // サインアップに成功したので、stepを進める
+      console.log('サインアップに成功しました');
+      handleNext();
+    }
+  }, [lastResult, handleNext]);
 
   return (
     <>
@@ -51,9 +63,20 @@ export const LoginForm: FC = () => {
           </div>
           <div className="space-y-1">
             <Label htmlFor="password">{authConfig.login.password.label}</Label>
-            <Input
+            {/* <Input
               id="password"
               type="password"
+              placeholder={authConfig.login.password.placeholder}
+              className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
+              key={fields.password.key}
+              name={fields.password.name}
+              defaultValue={fields.password.initialValue}
+            /> */}
+            <PasswordInput
+              id="password"
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              autoComplete="current-password"
               placeholder={authConfig.login.password.placeholder}
               className="focus:border-[#ffeedd] focus:ring-[#ffeedd]"
               key={fields.password.key}
