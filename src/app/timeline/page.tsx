@@ -32,16 +32,8 @@ export default async function Timeline() {
     return notFound();
   }
 
-  const avatarData = [
-    { src: 'https://github.com/shadcn.png', fallback: 'CN' },
-    { src: 'https://randomuser.me/api/portraits/men/1.jpg', fallback: 'M1' },
-    { src: 'https://randomuser.me/api/portraits/women/2.jpg', fallback: 'W2' },
-    { src: 'https://randomuser.me/api/portraits/men/3.jpg', fallback: 'M3' },
-    { src: 'https://randomuser.me/api/portraits/women/4.jpg', fallback: 'W4' },
-    { src: 'https://randomuser.me/api/portraits/men/5.jpg', fallback: 'M5' },
-  ];
   return (
-    <main className="p-4">
+    <div className="p-4">
       {/* 取得したデータを渡す */}
       <AvatarList users={users ?? []} />
       <div>
@@ -51,7 +43,7 @@ export default async function Timeline() {
             <Carousel>
               <CarouselContent>
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
                     <div className="p-1">
                       <Card>
                         <CardContent className="flex aspect-square items-center justify-center p-6">
@@ -72,7 +64,7 @@ export default async function Timeline() {
             <Carousel>
               <CarouselContent>
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
                     <div className="p-1">
                       <Card>
                         <CardContent className="flex aspect-square items-center justify-center p-6">
@@ -89,6 +81,6 @@ export default async function Timeline() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -22,21 +22,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* ヘッダー (小画面のみ表示) */}
         <div className="block lg:hidden">
           <Header />
         </div>
 
-        <div className="flex min-h-screen">
+        <div className="lg:flex min-h-screen">
           {/* サイドナビ (大画面のみ表示) */}
           <div className="hidden lg:block w-[240px] bg-[#ffeedd]">
             <PcSideNav />
           </div>
 
           {/* メインコンテンツ */}
-          <main className="flex-1 bg-[#fff3e9]">{children}</main>
+          <main className="bg-[#fff3e9] min-h-screen">{children}</main>
         </div>
 
         {/* フッター (小画面のみ表示) */}

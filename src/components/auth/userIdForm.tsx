@@ -13,7 +13,7 @@ import { CircleChevronRight } from 'lucide-react';
 import { useActionState, useCallback, useEffect, useState } from 'react';
 import debounce from 'debounce';
 
-export default function UserIdForm() {
+export default function UserIdForm({ Id }: { Id: string | null }) {
   const [lastResult, action, isPending] = useActionState(userId, undefined);
   const [form, fields] = useForm({
     // 前回の送信結果を同期
@@ -43,7 +43,7 @@ export default function UserIdForm() {
         const res = await fetch('/api/checkUserId', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: value }),
+          body: JSON.stringify({ id: value, oldId: Id }),
         });
         const { isTaken, error } = await res.json();
         if (error) {

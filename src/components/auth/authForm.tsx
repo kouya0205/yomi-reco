@@ -8,7 +8,7 @@ import { authConfig } from '@/config/auth';
 import { Fragment, useState } from 'react';
 import UserIdForm from '@/components/auth/userIdForm';
 
-export const AuthForm = () => {
+export const AuthForm = ({ Id }: { Id: string | null }) => {
   const [step, setStep] = useState<number>(0);
 
   const handleNext = () => {
@@ -56,7 +56,7 @@ export const AuthForm = () => {
         );
       case 1:
         // 登録後にユニークIDを設定するためのform画面
-        return <UserIdForm />;
+        return <UserIdForm Id={Id} />;
       default:
         return null;
     }

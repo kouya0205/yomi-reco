@@ -32,8 +32,9 @@ export const userIdSchema = z.object({
     .min(3, 'ユーザー名は3文字以上で入力してください'),
   id: z.string({ required_error: 'ユーザーIDを入力してください' }),
 });
-export const profileSchema = z.object({
+export const editProfileSchema = z.object({
   username: z
     .string({ required_error: 'ユーザー名を入力してください' })
     .min(3, 'ユーザー名は3文字以上で入力してください'),
+  id: z.string({ required_error: 'ユーザーIDを入力してください' }),
 });

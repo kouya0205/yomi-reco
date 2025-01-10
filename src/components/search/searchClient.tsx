@@ -103,7 +103,7 @@ export default function SearchClient({
   };
 
   return (
-    <div className="m-4">
+    <div className="p-4">
       <h1>書籍検索</h1>
 
       {/* 検索フォーム */}
