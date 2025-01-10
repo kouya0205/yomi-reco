@@ -11,8 +11,8 @@ export default async function Header() {
 
   return (
     <header className="bg-[#fff3e9] text-gray-500 w-full">
-      <div className="relative flex items-center justify-center p-3">
-        <Image src="/logo.svg" alt="logo" width={200} height={30} />
+      <div className="relative flex items-center justify-center p-3 h-12">
+        {/* <Image src="/logo.svg" alt="logo" width={200} height={30} /> */}
         {user ? (
           <div></div>
         ) : (

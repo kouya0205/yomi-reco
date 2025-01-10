@@ -7,14 +7,14 @@ export default async function AuthPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data } = await supabase.from('users').select('id').eq('user_id', user?.id);
-  if (user && data?.[0]?.id !== user.id) {
+  const { data: Id } = await supabase.from('users').select('id').eq('user_id', user?.id);
+  if (user && Id?.[0]?.id !== user.id) {
     redirect('/bookshelf');
   }
   return (
     <>
       <div className="flex min-h-screen flex-col items-center justify-between pt-10 lg:pt-20">
-        <AuthForm />
+        <AuthForm Id={Id?.[0]?.id} />
       </div>
     </>
   );

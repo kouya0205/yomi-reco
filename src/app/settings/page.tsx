@@ -1,26 +1,24 @@
-'use client';
+import EditProfile from '@/components/editProfile';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { signOut } from '@/hooks/useActions';
-import { createClient } from '@/utils/supabase/client';
-import { Link2, Link2Icon, LinkIcon, SquareArrowOutUpRight } from 'lucide-react';
+import { signOut, userId } from '@/hooks/useActions';
+import { createClient } from '@/utils/supabase/server';
+import { SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
-export default function Settings() {
-  const [userId, setUserID] = useState<string | null>(null);
-  const supabase = createClient();
+export default async function Settings() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const { data: userData } = await supabase
+    .from('users')
+    .select('*')
+    .eq('user_id', user?.id)
+    .single();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) setUserID(user.id);
-    };
-    fetchUser();
-  }, []);
   return (
     <div className="container mx-auto max-w-2xl px-4 py-8">
       {/* Header */}
@@ -32,13 +30,27 @@ export default function Settings() {
       {/* Account Section */}
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>アカウント</CardTitle>
+          <CardTitle>@{userData.id}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="flex justify-between">
+            <div className="flex flex-row items-center gap-2">
+              <Avatar>
+                <AvatarImage src={userData.avatar_url} />
+                <AvatarFallback>{userData.id}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <p>{userData.name}</p>
+                <p className="text-sm text-gray-500">{userData.email}</p>
+              </div>
+            </div>
+            <EditProfile userData={userData} />
+          </div>
+          <Separator />
           <div>
             <p className="text-sm font-medium">ユーザーID</p>
             <p className="text-sm text-gray-500">サポート時などに使用します</p>
-            <p className="mt-1 text-sm">{userId}</p>
+            <p className="mt-1 text-sm">{userData.user_id}</p>
           </div>
           <Separator />
           <div>

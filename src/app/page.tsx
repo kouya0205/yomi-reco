@@ -11,5 +11,5 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return <div className=""></div>;
+  return <></>;
 }

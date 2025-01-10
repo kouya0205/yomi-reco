@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
         search: '',
       },
     ],
-    domains: ['books.google.com'],
+    domains: ['books.google.com', 'lh3.googleusercontent.com', 'uxdzrlzsdmmidamhidik.supabase.co'],
   },
 
   async redirects() {
