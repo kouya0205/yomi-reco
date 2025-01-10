@@ -43,7 +43,7 @@ export default function UserIdForm({ Id }: { Id: string | null }) {
         const res = await fetch('/api/checkUserId', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: value, oldId: Id?.[0]?.id }),
+          body: JSON.stringify({ id: value, oldId: Id }),
         });
         const { isTaken, error } = await res.json();
         if (error) {
