@@ -3,6 +3,8 @@
 import { parseWithZod } from '@conform-to/zod';
 import { Provider } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
+import { decode } from 'base64-arraybuffer';
 
 import { supabaseErrorMessages } from '@/config/errorMessage';
 import { loginSchema, signupSchema, userIdSchema } from '@/config/schema';
@@ -101,9 +103,20 @@ export async function userId(prevState: unknown, formData: FormData) {
   if (!user) {
     return redirect('/auth');
   }
+  const { data: Id } = await supabase.from('users').select('id').eq('user_id', user.id);
 
   const name = formData.get('username') as string;
   const id = formData.get('id') as string;
+  if (Id && Id?.[0]?.id === id) {
+    const { error: nameError } = await supabase
+      .from('users')
+      .update({ name })
+      .match({ user_id: user.id });
+    if (nameError) {
+      return submission.reply({ formErrors: ['更新に失敗しました'] });
+    }
+    return redirect('/settings');
+  }
 
   // ここで再度 重複チェックしておくとベター
   const { data: existing, error: checkError } = await supabase
@@ -174,4 +187,69 @@ export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect('/auth');
+}
+
+export async function updateImg(base64Image: any) {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const { data: profile } = await supabase
+      .from('users')
+      .select('*')
+      .eq('user_id', user?.id)
+      .single();
+    let avatar_url = profile?.avatar_url;
+
+    if (base64Image) {
+      const matches = base64Image.base64Image.match(/^data:(.+);base64,(.+)$/);
+
+      if (!matches || matches.length !== 3) {
+        return { error: 'Invalid image' };
+      }
+
+      const contentType = matches[1];
+      const base64Data = matches[2];
+
+      const fileExt = contentType.split('/')[1];
+
+      const fileName = `${uuidv4()}.${fileExt}`;
+      console.log('fileName:', fileName);
+
+      const { error: storageError } = await supabase.storage
+        .from('avatars')
+        .upload(`${profile?.user_id}/${fileName}`, decode(base64Data), {
+          contentType,
+        });
+      if (storageError) {
+        return { error: 'Failed to upload image' };
+      }
+      if (avatar_url) {
+        const fileName = avatar_url.split('/').slice(-1)[0];
+
+        await supabase.storage.from('avatars').remove([`${profile?.user_id}/${fileName}`]);
+      }
+
+      const { data: urlData } = await supabase.storage
+        .from('avatars')
+        .getPublicUrl(`${profile?.user_id}/${fileName}`, {});
+
+      avatar_url = urlData?.publicUrl;
+      console.log('avatar_url', avatar_url);
+    }
+
+    const { error: updateError } = await supabase
+      .from('users')
+      .update({ avatar_url })
+      .match({ user_id: user?.id });
+
+    if (updateError) {
+      return { error: 'Failed to update image' };
+    }
+    return { message: 'Image updated successfully' };
+  } catch (error) {
+    console.error(error);
+    return { error: 'Failed to update image' };
+  }
 }

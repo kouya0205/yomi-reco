@@ -4,13 +4,16 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { id } = body;
+    const { id, oldId } = body;
     if (!id) {
       return NextResponse.json({ error: 'Userid is required' }, { status: 400 });
     }
 
+    if (oldId && oldId === id) {
+      return NextResponse.json({ isTaken: false });
+    }
+
     const supabase = await createClient();
-    // 例: users テーブルを参照 (実際のテーブル名に置き換えてください)
     const { data, error } = await supabase.from('users').select('id').eq('id', id).maybeSingle();
 
     // DB エラー時
