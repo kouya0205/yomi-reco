@@ -1,5 +1,12 @@
 import SearchClient from '@/components/search/searchClient';
 import { createClient } from '@/utils/supabase/server';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
+
+export const metadata: Metadata = {
+  title: '本検索',
+  description: '読みたい本を検索して追加しましょう。',
+};
 
 export default async function SearchPage() {
   const supabase = await createClient();
@@ -14,8 +21,9 @@ export default async function SearchPage() {
 
   return (
     <div>
-      {/* サーバーコンポーネントは、クライアントコンポーネントを呼び出すだけ */}
-      <SearchClient user_book={user_book} user={user} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SearchClient user_book={user_book} user={user} />
+      </Suspense>
     </div>
   );
 }

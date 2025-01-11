@@ -1,6 +1,13 @@
 import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import BookshelfClient from '@/components/bookShelfClient';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
+
+export const metadata: Metadata = {
+  title: 'My本棚',
+  description: '読んだ本、読みたい本、読んでいる本を管理できます。',
+};
 
 export default async function BookshelfPage() {
   const supabase = await createClient();
@@ -27,7 +34,9 @@ export default async function BookshelfPage() {
   return (
     <main className="p-4">
       {/* 取得した書籍データを BookshelfClient に渡す */}
-      <BookshelfClient books={books ?? []} user={user} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <BookshelfClient books={books ?? []} user={user} />
+      </Suspense>
     </main>
   );
 }
