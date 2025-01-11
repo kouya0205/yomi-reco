@@ -1,7 +1,7 @@
 'use client';
 
-import Avatar from '@/components/avatar';
-import ProfileForm from '@/components/profileForm';
+import Avatar from '@/components/profile/avatar';
+import ProfileForm from '@/components/profile/profileForm';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -55,6 +55,11 @@ export default function EditProfile({ userData }: { userData: any }) {
           base64Image,
         });
 
+        if (res.error) {
+          console.error(res.error);
+          return;
+        }
+
         router.refresh();
       } catch (error) {
         console.error(error);
@@ -66,7 +71,9 @@ export default function EditProfile({ userData }: { userData: any }) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">プロフィール編集</Button>
+          <Button variant="outline" className="">
+            プロフィール編集
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -74,6 +81,7 @@ export default function EditProfile({ userData }: { userData: any }) {
             <DialogDescription />
           </DialogHeader>
           <Avatar
+            isPending={isPending}
             uid={userData.id ?? null}
             initialUrl={imageUpload}
             onUpload={(imageList: ImageListType) => {
@@ -90,7 +98,9 @@ export default function EditProfile({ userData }: { userData: any }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">プロフィール編集</Button>
+        <Button variant="outline" className="md:w-full w-40">
+          プロフィール編集
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
@@ -100,6 +110,7 @@ export default function EditProfile({ userData }: { userData: any }) {
         <Avatar
           uid={userData.id ?? null}
           initialUrl={imageUpload}
+          isPending={isPending}
           onUpload={(imageList: ImageListType) => {
             setImageUpload(imageList);
             updateImage(imageList);

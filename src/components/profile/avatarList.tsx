@@ -17,7 +17,7 @@ export const AvatarList: React.FC<AvatarListProps> = ({ users }: AvatarListProps
         <div className="flex gap-4 p-4">
           {users.map((user, index) => (
             <div key={index} className="gap-4 flex flex-col items-center">
-              <Link href={`/bookshelf/${user.user_id}`}>
+              <Link href={`/bookshelf/${user.id}`}>
                 <div className="w-20 h-20 ring-2 ring-offset-2 ring-blue-500 hover:ring-offset-blue-300 transition-all rounded-full cursor-pointer overflow-hidden">
                   <Image
                     src={user.avatar_url ?? '/images/default-user-icon.webp'}

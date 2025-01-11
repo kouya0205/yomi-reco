@@ -1,6 +1,11 @@
 import { AuthForm } from '@/components/auth/authForm';
 import { createClient } from '@/utils/supabase/server';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'ログイン/新規登録',
+};
 
 export default async function AuthPage() {
   const supabase = await createClient();
