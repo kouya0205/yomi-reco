@@ -1,5 +1,4 @@
-import { AvatarList } from '@/components/avatarList';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { AvatarList } from '@/components/profile/avatarList';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
@@ -8,13 +7,18 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from '@/components/ui/carousel';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { createClient } from '@/utils/supabase/server';
-import Link from 'next/link';
+import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
+import { Suspense } from 'react';
+
+export const metadata: Metadata = {
+  title: 'タイムライン',
+  description:
+    'フォローしているユーザーの本棚やユーザーの人気ランキングや評価の高い本を確認できます。',
+};
 
 export default async function Timeline() {
-  // supabaseの定義
   const supabase = await createClient();
   const {
     data: { user },
@@ -35,7 +39,9 @@ export default async function Timeline() {
   return (
     <div className="p-4">
       {/* 取得したデータを渡す */}
-      <AvatarList users={users ?? []} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <AvatarList users={users ?? []} />
+      </Suspense>
       <div>
         <div className="m-12">
           <div className="text-2xl font-bold">今週のランキングTop10</div>

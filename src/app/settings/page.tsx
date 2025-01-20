@@ -1,12 +1,20 @@
-import EditProfile from '@/components/editProfile';
+import EditProfile from '@/components/profile/editProfile';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { signOut, userId } from '@/hooks/useActions';
+import { signOut } from '@/hooks/useActions';
 import { createClient } from '@/utils/supabase/server';
 import { SquareArrowOutUpRight } from 'lucide-react';
+import { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
+
+export const metadata: Metadata = {
+  title: '設定',
+  description: 'アカウントの設定やサポートについて',
+};
 
 export default async function Settings() {
   const supabase = await createClient();
@@ -28,52 +36,57 @@ export default async function Settings() {
       </div>
 
       {/* Account Section */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>@{userData.id}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex justify-between">
-            <div className="flex flex-row items-center gap-2">
-              <Avatar>
-                <AvatarImage src={userData.avatar_url} />
-                <AvatarFallback>{userData.id}</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col">
-                <p>{userData.name}</p>
-                <p className="text-sm text-gray-500">{userData.email}</p>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>@{userData.id}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-col sm:flex-row justify-between gap-2">
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  src={userData.avatar_url}
+                  alt="avatar"
+                  width={44}
+                  height={44}
+                  className="rounded-full"
+                />
+                <div className="flex flex-col">
+                  <p>{userData.name}</p>
+                  <p className="text-sm text-gray-500">{userData.email}</p>
+                </div>
               </div>
+              <EditProfile userData={userData} />
             </div>
-            <EditProfile userData={userData} />
-          </div>
-          <Separator />
-          <div>
-            <p className="text-sm font-medium">ユーザーID</p>
-            <p className="text-sm text-gray-500">サポート時などに使用します</p>
-            <p className="mt-1 text-sm">{userData.user_id}</p>
-          </div>
-          <Separator />
-          <div>
-            <p className="text-sm font-medium">ログアウト</p>
-            <p className="text-sm text-gray-500">
-              このデバイスからログアウトして、トップページに戻ります
-            </p>
-            <form action={signOut}>
-              <Button type="submit" variant="outline" className="mt-2">
-                ログアウト
+            <Separator />
+            <div>
+              <p className="text-sm font-medium">ユーザーID</p>
+              <p className="text-sm text-gray-500">サポート時などに使用します</p>
+              <p className="mt-1 text-sm">{userData.user_id}</p>
+            </div>
+            <Separator />
+            <div>
+              <p className="text-sm font-medium">ログアウト</p>
+              <p className="text-sm text-gray-500">
+                このデバイスからログアウトして、トップページに戻ります
+              </p>
+              <form action={signOut}>
+                <Button type="submit" variant="outline" className="mt-2">
+                  ログアウト
+                </Button>
+              </form>
+            </div>
+            <Separator />
+            <div>
+              <p className="text-sm font-medium">退会</p>
+              <p className="text-sm text-gray-500">アカウントを削除して退会します</p>
+              <Button variant="destructive" className="mt-2">
+                アカウントを削除
               </Button>
-            </form>
-          </div>
-          <Separator />
-          <div>
-            <p className="text-sm font-medium">退会</p>
-            <p className="text-sm text-gray-500">アカウントを削除して退会します</p>
-            <Button variant="destructive" className="mt-2">
-              アカウントを削除
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          </CardContent>
+        </Card>
+      </Suspense>
 
       {/* Support Section */}
       <Card>

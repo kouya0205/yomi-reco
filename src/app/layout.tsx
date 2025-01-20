@@ -16,8 +16,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'よみれこ',
-  description: '積読を管理し、本を共有するサービス',
+  title: {
+    template: '%s | ヨミレコ',
+    default: '積読を記録し、本棚を共有できるサービス',
+  },
+  description: '積読を記録し、本棚を共有できるサービス',
+  metadataBase: new URL('https://yomi-reco.vercel.app/'),
+  openGraph: {
+    title: 'ヨミレコ',
+    description: '積読を記録し、本棚を共有できるサービス',
+    url: 'https://yomi-reco.vercel.app/',
+    images: [
+      {
+        url: 'https://yomi-reco.vercel.app/ogp.png',
+        width: 1200,
+        height: 630,
+        alt: 'ヨミレコ',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@your_twitter_account',
+    title: 'Twitterカード用のタイトル',
+    description: 'Twitterカード用の説明文',
+    images: ['https://yomi-reco.vercel.app/ogp.png'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -36,7 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           {/* メインコンテンツ */}
-          <main className="bg-[#fff3e9] min-h-screen">{children}</main>
+          <main className="bg-[#fff3e9] min-h-screen w-full">{children}</main>
         </div>
 
         {/* フッター (小画面のみ表示) */}

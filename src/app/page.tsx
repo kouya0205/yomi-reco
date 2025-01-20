@@ -1,9 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
-import { signOut } from '@/hooks/useActions';
 import { createClient } from '@/utils/supabase/server';
-import Image from 'next/image';
-import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
   const supabase = await createClient();
@@ -11,5 +7,9 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return <></>;
+  if (user) {
+    redirect('/bookshelf');
+  } else {
+    redirect('/auth');
+  }
 }

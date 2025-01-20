@@ -9,9 +9,10 @@ interface UploadAvatarProps {
   onUpload: (imageList: ImageListType) => void;
   initialUrl: ImageListType;
   uid: string;
+  isPending: boolean;
 }
 
-export default function Avatar({ uid, initialUrl, onUpload }: UploadAvatarProps) {
+export default function Avatar({ uid, initialUrl, onUpload, isPending }: UploadAvatarProps) {
   const [previewUrl, setPreviewUrl] = useState(initialUrl);
 
   const uploadAvatar = (imageList: ImageListType) => {
@@ -51,6 +52,11 @@ export default function Avatar({ uid, initialUrl, onUpload }: UploadAvatarProps)
 
             {imageList.map((image, index) => (
               <div key={index}>
+                {isPending && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                    <div className="text-white">アップロード中...</div>
+                  </div>
+                )}
                 {image.dataURL && (
                   <div className="relative h-32 w-32">
                     <Image
