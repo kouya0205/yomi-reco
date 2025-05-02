@@ -110,15 +110,11 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
 
   // コメントボタンのアニメーション
   const handleCommentClick = () => {
-    console.log('[handleCommentClick] Comment icon clicked.');
     setIsCommentAnimating(true);
     setShowComments(true);
 
     if (onCommentClick) {
-      console.log('[handleCommentClick] onCommentClick provided, calling it.');
       onCommentClick(post.id);
-    } else {
-      console.log('[handleCommentClick] onCommentClick NOT provided.');
     }
 
     // アニメーション完了までの時間を確保
@@ -126,9 +122,6 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
       setIsCommentAnimating(false);
     }, 600);
   };
-
-  // ★ログ追加: レンダリング時の状態を確認
-  console.log('[PostCard Render] showComments state:', showComments);
 
   return (
     <>
@@ -348,8 +341,6 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
         </CardFooter>
       </Card>
 
-      {/* コメントダイアログ */}
-      {console.log('[PostCard Render] Rendering CommentDialog? showComments is:', showComments)}
       <CommentDialog post={post} isOpen={showComments} onClose={() => setShowComments(false)} />
     </>
   );
