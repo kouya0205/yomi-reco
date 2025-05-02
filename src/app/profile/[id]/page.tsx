@@ -14,9 +14,8 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const resolvedParams = await params;
+  const { id } = await params;
   const supabase = await createClient();
-  const id = resolvedParams.id;
 
   const { data: user } = await supabase.from('users').select('name').eq('id', id).single();
 
@@ -30,15 +29,14 @@ export async function generateMetadata(
   };
 }
 
-export default async function ProfilePage({ params }: Props) {
-  const resolvedParams = await params;
+export default async function ProfilePage({ params, searchParams }: Props) {
+  const { id } = await params;
   const supabase = await createClient();
-  const targetUserId = resolvedParams.id;
 
   const { data: profileUser, error: profileUserError } = await supabase
     .from('users')
     .select('user_id, id, name, email, avatar_url, bio')
-    .eq('id', targetUserId)
+    .eq('id', id)
     .single();
 
   if (profileUserError || !profileUser) {
