@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import TabGroup from '@/components/tabGroupe';
 import BookDetailDialog from '@/components/bookDetailDialog';
 import UserBookCard from '@/components/userBookCard';
 import { User } from 'types';
 import { useRouter } from 'next/navigation';
+import { LoaderCircle } from 'lucide-react';
+import Loading from '@/app/bookshelf/loading';
 
 // APIから取得したデータの型例
 export type BookData = {
@@ -115,27 +117,29 @@ export default function BookshelfClient({ books, user }: Props) {
       </div>
 
       {/* 書籍表示 */}
-      <div className="flex flex-col space-y-4">
-        <p className="text-sm text-gray-600">{filteredBooks.length}冊</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredBooks.map((book, index) => (
-            <UserBookCard
-              key={index}
-              book={book}
-              user={user}
-              onClick={() => handleBookClick(book)}
-            />
-          ))}
+      <Suspense fallback={<Loading />}>
+        <div className="flex flex-col space-y-4">
+          <p className="text-sm text-gray-600">{filteredBooks.length}冊</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredBooks.map((book, index) => (
+              <UserBookCard
+                key={index}
+                book={book}
+                user={user}
+                onClick={() => handleBookClick(book)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* 詳細Dialog / Modal */}
-      <BookDetailDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        book={selectedBook}
-        onStatusChange={updateStatus}
-      />
+        {/* 詳細Dialog / Modal */}
+        <BookDetailDialog
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          book={selectedBook}
+          onStatusChange={updateStatus}
+        />
+      </Suspense>
     </div>
   );
 }

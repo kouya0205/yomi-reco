@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const { user_id, book, status } = body; // フロントから送られる想定
-    console.log('book', book);
 
     // user_id, book_id をユニークキーにしている場合 (あるいは複合一意キー)
     // なければINSERT、有ればUPDATEを行う

@@ -1,3 +1,4 @@
+import Loading from '@/app/bookshelf/loading';
 import SearchClient from '@/components/search/searchClient';
 import { createClient } from '@/utils/supabase/server';
 import { Metadata } from 'next';
@@ -21,7 +22,7 @@ export default async function SearchPage() {
 
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <SearchClient user_book={user_book} user={user} />
       </Suspense>
     </div>

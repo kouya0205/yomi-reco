@@ -2,10 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useState } from 'react';
 
 type Props = {
   query: string;
-  setQuery: (val: string) => void;
+  setQuery: (query: string) => void;
   onSearch: () => void;
   isLoading: boolean;
 };
@@ -17,19 +18,17 @@ export default function SearchForm({ query, setQuery, onSearch, isLoading }: Pro
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="flex items-center gap-2 mb-4">
-        <Input
-          type="text"
-          placeholder="ISBN またはキーワード"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-96"
-        />
-        <Button onClick={onSearch} disabled={isLoading}>
-          検索
-        </Button>
-      </div>
+    <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+      <Input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="書籍名、著者名、ISBNなどで検索"
+        className="flex-1"
+      />
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? '検索中...' : '検索'}
+      </Button>
     </form>
   );
 }

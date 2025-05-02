@@ -9,10 +9,32 @@ const nextConfig: NextConfig = {
         hostname: 'images-na.ssl-images-amazon.com',
         port: '',
         pathname: '/images/**',
-        search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ndlsearch.ndl.go.jp',
+        port: '',
+        pathname: '/thumbnail/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'books.google.com',
+        port: '',
+        pathname: '/books/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'uxdzrlzsdmmidamhidik.supabase.co',
+        port: '',
+        pathname: '/**',
       },
     ],
-    domains: ['books.google.com', 'lh3.googleusercontent.com', 'uxdzrlzsdmmidamhidik.supabase.co'],
   },
 
   async redirects() {

@@ -28,6 +28,8 @@ export interface Book {
   isbn: string;
   publisher?: string;
   coverImage?: string; // カバー画像のURL
+  publishedDate?: string; // 出版日
+  canonicalVolumeLink?: string; // 詳細リンクのURL
   status: BookStatus;
   affiliateLinks?: AffiliateLinks;
   createdAt: Date;

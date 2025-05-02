@@ -56,6 +56,19 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      animation: {
+        'page-flip': 'pageFlip 1.8s infinite linear',
+      },
+      keyframes: {
+        pageFlip: {
+          '0%': { transform: 'rotateY(0deg)', zIndex: '10' },
+          '40%': { transform: 'rotateY(-100deg)', zIndex: '10' },
+          '50%': { transform: 'rotateY(-180deg)', zIndex: '10' },
+          '50.1%': { transform: 'rotateY(-180deg)', zIndex: '20' },
+          '90%': { transform: 'rotateY(-360deg)', zIndex: '20' },
+          '100%': { transform: 'rotateY(-360deg)', zIndex: '20' },
+        },
+      },
     },
   },
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')],

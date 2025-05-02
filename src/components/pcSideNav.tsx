@@ -12,19 +12,45 @@ import {
   LibraryBig,
   BookHeart,
   SquarePlus,
+  User,
 } from 'lucide-react';
-import { JSX } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import SideNavFooter from '@/components/sideNavFooter';
+import { createClient } from '@/utils/supabase/client';
 
 interface SideNavItem {
   href: string;
   icon: JSX.Element;
   label: string;
+  key: string; // キーを追加
 }
 
 export default function PcSideNav() {
   // 現在のパス (例: "/search", "/settings" など)
   const pathname = usePathname();
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const { data } = await supabase.auth.getUser();
+
+      if (data.user) {
+        // ユーザーIDを取得
+        const { data: userData } = await supabase
+          .from('users')
+          .select('id')
+          .eq('user_id', data.user.id)
+          .single();
+
+        if (userData) {
+          setUserId(userData.id);
+        }
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   // パスを比較するための関数
   const isActive = (itemHref: string) => {
@@ -33,11 +59,18 @@ export default function PcSideNav() {
     return pathname === itemHref || pathname.startsWith(itemHref + '/');
   };
 
+  // 各項目に一意のキーを設定
   const sideNavItems: SideNavItem[] = [
-    { href: '/bookshelf', icon: <LibraryBig />, label: 'My本棚' },
-    { href: '/search', icon: <Search />, label: '検索' },
-    { href: '/timeline', icon: <BookHeart />, label: 'タイムライン' },
-    { href: '/settings', icon: <Settings />, label: '設定' },
+    {
+      href: userId ? `/profile/${userId}` : '/settings',
+      icon: <User />,
+      label: 'プロフィール',
+      key: 'profile',
+    },
+    { href: '/bookshelf', icon: <LibraryBig />, label: 'My本棚', key: 'bookshelf' },
+    { href: '/search', icon: <Search />, label: '検索', key: 'search' },
+    { href: '/timeline', icon: <BookHeart />, label: 'タイムライン', key: 'timeline' },
+    { href: '/settings', icon: <Settings />, label: '設定', key: 'settings' },
   ];
 
   return (
@@ -50,12 +83,12 @@ export default function PcSideNav() {
         {/* ナビゲーションメニュー */}
         <nav className="w-full">
           <ul className="flex flex-col gap-4">
-            {sideNavItems.map(({ href, icon, label }) => {
-              const active = isActive(href);
+            {sideNavItems.map((item) => {
+              const active = isActive(item.href);
 
               return (
-                <li key={href}>
-                  <Link href={href} className="group">
+                <li key={item.key}>
+                  <Link href={item.href} className="group">
                     {/* アクティブな場合に背景色や文字色を変更 */}
                     <div
                       className={`flex gap-4 pl-6 pr-8 py-2 rounded-r-full transition-colors
@@ -63,9 +96,9 @@ export default function PcSideNav() {
                     `}>
                       <span
                         className={`h-5 w-5 transition-colors ${active ? 'text-white' : 'text-gray-500 group-hover:text-gray-700'}`}>
-                        {icon}
+                        {item.icon}
                       </span>
-                      <p>{label}</p>
+                      <p>{item.label}</p>
                     </div>
                   </Link>
                 </li>
