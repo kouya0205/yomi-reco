@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/server';
 import { FollowButton } from '@/components/profile/followButton';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -14,8 +14,9 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
+  const resolvedParams = await params;
   const supabase = await createClient();
-  const id = params.id;
+  const id = resolvedParams.id;
 
   const { data: user } = await supabase.from('users').select('name').eq('id', id).single();
 
@@ -30,8 +31,9 @@ export async function generateMetadata(
 }
 
 export default async function ProfilePage({ params }: Props) {
+  const resolvedParams = await params;
   const supabase = await createClient();
-  const targetUserId = params.id;
+  const targetUserId = resolvedParams.id;
 
   const { data: profileUser, error: profileUserError } = await supabase
     .from('users')
