@@ -36,7 +36,6 @@ export const LoginForm = ({ handleNext }: { handleNext: () => void }) => {
   useEffect(() => {
     if (lastResult?.status === 'success') {
       // サインアップに成功したので、stepを進める
-      console.log('サインアップに成功しました');
       handleNext();
     }
   }, [lastResult, handleNext]);
