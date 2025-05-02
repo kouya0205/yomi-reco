@@ -59,7 +59,7 @@ export default function FollowTabs({ userId, currentUserId }: FollowTabsProps) {
     try {
       const result = await getFollowing(userId, page);
       if ('error' in result) {
-        setError(result.error);
+        setError(result.error ? result.error : null);
       } else {
         if (page === 1) {
           setFollowingUsers(result.users);
@@ -84,7 +84,7 @@ export default function FollowTabs({ userId, currentUserId }: FollowTabsProps) {
     try {
       const result = await getFollowers(userId, page);
       if ('error' in result) {
-        setError(result.error);
+        setError(result.error ? result.error : null);
       } else {
         if (page === 1) {
           setFollowersUsers(result.users);
